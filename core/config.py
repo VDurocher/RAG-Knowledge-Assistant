@@ -18,7 +18,12 @@ class Settings:
         default_factory=lambda: os.getenv("EMBEDDER_TYPE", "local")
     )
 
-    # Clé API OpenAI — requise pour la génération (et les embeddings si embedder_type="openai")
+    # Moteur de génération : "openai" (cloud) ou "ollama" (local, gratuit)
+    llm_type: str = field(
+        default_factory=lambda: os.getenv("LLM_TYPE", "openai")
+    )
+
+    # Clé API OpenAI — requise uniquement si llm_type="openai" (ou embedder_type="openai")
     openai_api_key: str = field(
         default_factory=lambda: os.getenv("OPENAI_API_KEY", "")
     )
@@ -26,6 +31,14 @@ class Settings:
     # Modèle de génération OpenAI
     openai_chat_model: str = field(
         default_factory=lambda: os.getenv("OPENAI_CHAT_MODEL", "gpt-4o-mini")
+    )
+
+    # Configuration Ollama (mode local entièrement gratuit)
+    ollama_base_url: str = field(
+        default_factory=lambda: os.getenv("OLLAMA_BASE_URL", "http://localhost:11434")
+    )
+    ollama_model: str = field(
+        default_factory=lambda: os.getenv("OLLAMA_MODEL", "llama3.2")
     )
 
     # Modèle HuggingFace pour les embeddings locaux
@@ -54,13 +67,20 @@ class Settings:
 
     def validate(self) -> None:
         """Vérifie que la configuration est valide avant le démarrage."""
-        if not self.openai_api_key:
+        if self.llm_type not in {"openai", "ollama"}:
             raise ValueError(
-                "OPENAI_API_KEY manquant. Créez un fichier .env à partir de .env.example."
+                f"LLM_TYPE invalide: '{self.llm_type}'. Valeurs acceptées: 'openai', 'ollama'."
             )
         if self.embedder_type not in {"openai", "local"}:
             raise ValueError(
                 f"EMBEDDER_TYPE invalide: '{self.embedder_type}'. Valeurs acceptées: 'openai', 'local'."
+            )
+        # La clé OpenAI est requise seulement si l'un des deux composants utilise le cloud
+        needs_openai = self.llm_type == "openai" or self.embedder_type == "openai"
+        if needs_openai and not self.openai_api_key:
+            raise ValueError(
+                "OPENAI_API_KEY manquant. Requis quand LLM_TYPE=openai ou EMBEDDER_TYPE=openai.\n"
+                "Pour un mode 100% local et gratuit : LLM_TYPE=ollama + EMBEDDER_TYPE=local"
             )
 
 

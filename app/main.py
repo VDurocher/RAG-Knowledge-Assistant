@@ -127,8 +127,12 @@ with st.sidebar:
     )
 
     embedder_display = "OpenAI (cloud)" if settings.embedder_type == "openai" else "Local (HuggingFace)"
+    if settings.llm_type == "ollama":
+        llm_display = f"Ollama / {settings.ollama_model} (local)"
+    else:
+        llm_display = f"OpenAI / {settings.openai_chat_model}"
     st.caption(f"**Embedder:** {embedder_display}")
-    st.caption(f"**LLM:** {settings.openai_chat_model}")
+    st.caption(f"**LLM:** {llm_display}")
 
     st.divider()
 

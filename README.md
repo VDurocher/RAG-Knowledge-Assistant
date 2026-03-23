@@ -120,13 +120,42 @@ Full architecture documentation: [`docs/architecture.md`](docs/architecture.md)
 
 ---
 
+## Zero-Cost Mode (Fully Local)
+
+Run the entire system with no API key and no cloud dependency using [Ollama](https://ollama.com).
+
+```bash
+# 1. Install Ollama (https://ollama.com)
+# 2. Pull a local model
+ollama pull llama3.2
+
+# 3. Configure .env
+LLM_TYPE=ollama
+EMBEDDER_TYPE=local
+# OPENAI_API_KEY is not needed
+```
+
+| Mode | Embeddings | Generation | Cost | Privacy |
+|------|-----------|------------|------|---------|
+| **Full local** | HuggingFace | Ollama (llama3.2) | Free | 100% on-premise |
+| **Hybrid** | HuggingFace | OpenAI GPT-4o-mini | ~$6/month | Queries sent to OpenAI |
+| **Full cloud** | OpenAI | OpenAI GPT-4o | ~$60/month | Best accuracy |
+
+> **Note:** Local LLMs (Ollama) are slower and less accurate than GPT-4o on complex reasoning.
+> For production deployments with sensitive documents, the full-local mode is the recommended starting point.
+
+---
+
 ## Configuration Reference
 
 | Variable | Default | Description |
 |----------|---------|-------------|
-| `OPENAI_API_KEY` | — | **Required.** Used for LLM generation (and embeddings if `EMBEDDER_TYPE=openai`) |
+| `LLM_TYPE` | `openai` | `openai` (cloud) or `ollama` (local, free) |
+| `OPENAI_API_KEY` | — | Required only when `LLM_TYPE=openai` or `EMBEDDER_TYPE=openai` |
+| `OPENAI_CHAT_MODEL` | `gpt-4o-mini` | Any OpenAI chat model |
+| `OLLAMA_MODEL` | `llama3.2` | Any model pulled via `ollama pull` |
+| `OLLAMA_BASE_URL` | `http://localhost:11434` | Ollama server URL |
 | `EMBEDDER_TYPE` | `local` | `local` (HuggingFace, free) or `openai` (text-embedding-3-small) |
-| `OPENAI_CHAT_MODEL` | `gpt-4o-mini` | Any OpenAI chat model. Use `gpt-4o` for higher accuracy |
 | `LOCAL_EMBED_MODEL` | `all-MiniLM-L6-v2` | Any sentence-transformers model |
 | `RETRIEVAL_K` | `4` | Passages retrieved per query. Increase for complex questions |
 | `CHUNK_SIZE` | `1000` | Characters per chunk. Lower for precise retrieval, higher for context |

@@ -4,9 +4,9 @@ from dataclasses import dataclass
 
 from langchain_community.vectorstores import FAISS
 from langchain_core.documents import Document
+from langchain_core.language_models.chat_models import BaseChatModel
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.prompts import ChatPromptTemplate
-from langchain_openai import ChatOpenAI
 
 from core.config import Settings
 
@@ -65,8 +65,25 @@ def build_retriever(vector_store: FAISS, k: int):
     )
 
 
-def build_llm(settings: Settings) -> ChatOpenAI:
-    """Instancie le modèle de génération OpenAI."""
+def build_llm(settings: Settings) -> BaseChatModel:
+    """
+    Instancie le modèle de génération selon LLM_TYPE.
+
+    - "openai" → ChatOpenAI (cloud, API key requise)
+    - "ollama" → ChatOllama (local, entièrement gratuit, nécessite Ollama installé)
+    """
+    if settings.llm_type == "ollama":
+        from langchain_community.chat_models import ChatOllama
+
+        return ChatOllama(
+            model=settings.ollama_model,
+            base_url=settings.ollama_base_url,
+            temperature=0.1,
+        )
+
+    # Défaut : OpenAI
+    from langchain_openai import ChatOpenAI
+
     return ChatOpenAI(
         model=settings.openai_chat_model,
         api_key=settings.openai_api_key,
@@ -74,7 +91,7 @@ def build_llm(settings: Settings) -> ChatOpenAI:
     )
 
 
-def ask(question: str, retriever, llm: ChatOpenAI) -> RAGResponse:
+def ask(question: str, retriever, llm: BaseChatModel) -> RAGResponse:
     """
     Répond à une question en récupérant les passages pertinents et en générant une réponse.
 
@@ -111,7 +128,7 @@ def ask(question: str, retriever, llm: ChatOpenAI) -> RAGResponse:
     return RAGResponse(answer=answer, source_documents=source_documents)
 
 
-def ask_stream(question: str, retriever, llm: ChatOpenAI) -> tuple:
+def ask_stream(question: str, retriever, llm: BaseChatModel) -> tuple:
     """
     Variante streaming de ask() pour une meilleure UX dans Streamlit.
 
