@@ -1,0 +1,137 @@
+NEXUS SUPPLY CO. — TABLEAU COMPARATIF FOURNISSEURS 2026
+========================================================
+Mis à jour : 15/01/2026 | Responsable achats : Thomas Berger
+Objectif : optimisation des coûts d'approvisionnement sur les produits à forte rotation
+
+NOTES D'ÉVALUATION FOURNISSEURS
+---------------------------------
+AlphaPro    : Qualité 9/10 | Délai 8/10 | SAV 8/10 | Prix 7/10
+BetaSupply  : Qualité 8/10 | Délai 9/10 | SAV 9/10 | Prix 9/10
+GammaDist   : Qualité 8/10 | Délai 6/10 | SAV 7/10 | Prix 8/10
+
+COMPARAISON PRIX — PRODUITS À FORTE ROTATION
+=============================================
+
+ORDINATEURS PORTABLES
+----------------------
+Produit : Dell XPS 15 9530 (i7/32Go/1To/OLED)
+  AlphaPro   : 1 849,00 EUR | GammaDist : 1 899,00 EUR | BetaSupply : 1 779,00 EUR
+  >> MEILLEUR PRIX : BetaSupply — économie de 70 EUR vs AlphaPro / 120 EUR vs GammaDist
+
+Produit : Dell XPS 15 9530 (i5/16Go/512Go)
+  AlphaPro   : 1 249,00 EUR | GammaDist : 1 299,00 EUR | BetaSupply : 1 189,00 EUR
+  >> MEILLEUR PRIX : BetaSupply — économie de 60 EUR vs AlphaPro
+
+Produit : Lenovo ThinkPad X1 Carbon Gen 12 (i7/32Go)
+  AlphaPro   : 1 699,00 EUR | GammaDist : 1 589,00 EUR | BetaSupply : 1 629,00 EUR
+  >> MEILLEUR PRIX : GammaDist — économie de 110 EUR vs AlphaPro
+
+Produit : MacBook Pro 14" M3 (16Go/512Go)
+  AlphaPro   : 1 999,00 EUR | GammaDist : 1 949,00 EUR | BetaSupply : 2 149,00 EUR
+  >> MEILLEUR PRIX : GammaDist — économie de 50 EUR vs AlphaPro / 200 EUR vs BetaSupply
+
+MONITEURS
+----------
+Produit : LG UltraWide 27" 4K (27UP85R)
+  AlphaPro   : 389,00 EUR | GammaDist : 375,00 EUR | BetaSupply : 412,00 EUR
+  >> MEILLEUR PRIX : GammaDist — économie de 14 EUR vs AlphaPro / 37 EUR vs BetaSupply
+
+Produit : Dell UltraSharp U2422H 24"
+  AlphaPro   : 289,00 EUR | GammaDist : 268,00 EUR | BetaSupply : 275,00 EUR
+  >> MEILLEUR PRIX : GammaDist — économie de 21 EUR vs AlphaPro
+
+Produit : Samsung 32" QHD S32BG700
+  AlphaPro   : 449,00 EUR | GammaDist : 459,00 EUR | BetaSupply : 469,00 EUR
+  >> MEILLEUR PRIX : AlphaPro — économie de 10 EUR vs GammaDist / 20 EUR vs BetaSupply
+
+SOURIS
+------
+Produit : Logitech MX Master 3S
+  AlphaPro   : 89,00 EUR | GammaDist : 94,00 EUR | BetaSupply : 82,00 EUR
+  >> MEILLEUR PRIX : BetaSupply — économie de 7 EUR vs AlphaPro / 12 EUR vs GammaDist
+
+Produit : Apple Magic Mouse
+  AlphaPro   : 79,00 EUR | GammaDist : 76,00 EUR | BetaSupply : 85,00 EUR
+  >> MEILLEUR PRIX : GammaDist — économie de 3 EUR vs AlphaPro / 9 EUR vs BetaSupply
+
+CLAVIERS
+---------
+Produit : Logitech MX Keys Advanced
+  AlphaPro   : 129,00 EUR | GammaDist : 134,00 EUR | BetaSupply : 119,00 EUR
+  >> MEILLEUR PRIX : BetaSupply — économie de 10 EUR vs AlphaPro / 15 EUR vs GammaDist
+
+Produit : Keychron K8 Pro (mécanique sans fil)
+  AlphaPro   : 119,00 EUR | GammaDist : 109,00 EUR | BetaSupply : 125,00 EUR
+  >> MEILLEUR PRIX : GammaDist — économie de 10 EUR vs AlphaPro / 16 EUR vs BetaSupply
+
+AUDIO
+------
+Produit : Jabra Evolve2 85 (ANC, sans fil)
+  AlphaPro   : 419,00 EUR | GammaDist : 435,00 EUR | BetaSupply : 399,00 EUR
+  >> MEILLEUR PRIX : BetaSupply — économie de 20 EUR vs AlphaPro / 36 EUR vs GammaDist
+
+Produit : Logitech C920 Webcam HD
+  AlphaPro   : 89,00 EUR | GammaDist : 94,00 EUR | BetaSupply : 79,00 EUR
+  >> MEILLEUR PRIX : BetaSupply — économie de 10 EUR vs AlphaPro / 15 EUR vs GammaDist
+
+STOCKAGE
+---------
+Produit : Samsung T7 SSD Externe 1 To
+  AlphaPro   : 139,00 EUR | GammaDist : 132,00 EUR | BetaSupply : 145,00 EUR
+  >> MEILLEUR PRIX : GammaDist — économie de 7 EUR vs AlphaPro / 13 EUR vs BetaSupply
+
+Produit : Samsung T7 SSD Externe 2 To
+  AlphaPro   : 219,00 EUR | GammaDist : 209,00 EUR | BetaSupply : 229,00 EUR
+  >> MEILLEUR PRIX : GammaDist — économie de 10 EUR vs AlphaPro / 20 EUR vs BetaSupply
+
+HUBS & CONNECTIVITÉ
+--------------------
+Produit : Anker USB-C Hub 7-en-1
+  AlphaPro   : 45,00 EUR | GammaDist : 48,00 EUR | BetaSupply : 42,00 EUR
+  >> MEILLEUR PRIX : BetaSupply — économie de 3 EUR vs AlphaPro / 6 EUR vs GammaDist
+
+Produit : CalDigit TS4 Thunderbolt 4 Dock
+  AlphaPro   : 369,00 EUR | GammaDist : 359,00 EUR | BetaSupply : 389,00 EUR
+  >> MEILLEUR PRIX : GammaDist — économie de 10 EUR vs AlphaPro / 30 EUR vs BetaSupply
+
+ALIMENTATION
+-------------
+Produit : APC Back-UPS Pro 1500VA
+  AlphaPro   : 249,00 EUR | GammaDist : 259,00 EUR | BetaSupply : 239,00 EUR
+  >> MEILLEUR PRIX : BetaSupply — économie de 10 EUR vs AlphaPro / 20 EUR vs GammaDist
+
+MOBILIER
+---------
+Produit : Chaise Ergopro X3
+  AlphaPro   : 299,00 EUR | GammaDist : 315,00 EUR | BetaSupply : 279,00 EUR
+  >> MEILLEUR PRIX : BetaSupply — économie de 20 EUR vs AlphaPro / 36 EUR vs GammaDist
+
+Produit : Chaise Ergopro X5 Pro
+  AlphaPro   : 449,00 EUR | GammaDist : 469,00 EUR | BetaSupply : 419,00 EUR
+  >> MEILLEUR PRIX : BetaSupply — économie de 30 EUR vs AlphaPro / 50 EUR vs GammaDist
+
+IMPRESSION
+-----------
+Produit : HP LaserJet Pro M404dn
+  AlphaPro   : 329,00 EUR | GammaDist : 319,00 EUR | BetaSupply : 349,00 EUR
+  >> MEILLEUR PRIX : GammaDist — économie de 10 EUR vs AlphaPro / 30 EUR vs BetaSupply
+
+Produit : Toner HP CF259A
+  AlphaPro   : 29,00 EUR | GammaDist : 26,00 EUR | BetaSupply : 22,00 EUR
+  >> MEILLEUR PRIX : BetaSupply — économie de 7 EUR vs AlphaPro / 4 EUR vs GammaDist
+
+SYNTHÈSE — STRATÉGIE D'ACHAT RECOMMANDÉE
+==========================================
+BetaSupply    : 12 produits les moins chers (ordinateurs, périphériques courants, mobilier)
+GammaDist     : 8 produits les moins chers (moniteurs, stockage, docks, Mac)
+AlphaPro      : 2 produits les moins chers (Samsung 32" moniteur uniquement)
+
+Recommandation : utiliser BetaSupply en fournisseur principal, GammaDist pour les commandes
+de moniteurs, stockage et produits Apple. AlphaPro en backup pour les urgences (meilleur délai).
+
+ÉCONOMIES POTENTIELLES ANNUELLES (estimation base 2025)
+---------------------------------------------------------
+Si migration totale vers les meilleurs prix par produit :
+  Économie estimée vs achat 100% AlphaPro : ~8 200 EUR/an
+  Économie estimée vs achat 100% GammaDist : ~5 100 EUR/an
+  Économie estimée vs achat 100% BetaSupply : ~1 900 EUR/an (déjà proche optimal)
