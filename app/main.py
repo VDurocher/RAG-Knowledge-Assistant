@@ -198,23 +198,10 @@ except Exception as error:
     st.error(f"**Pipeline error:** {error}")
     st.stop()
 
-# ─── Demo questions ───────────────────────────────────────────────────────────
-
-DEMO_QUESTIONS: list[tuple[str, str]] = [
-    ("💰", "Which supplier has the best price for the Jabra Evolve2 85 headset?"),
-    ("📊", "What was Metro Digital Agency's total spend in Q1 2026, and how many orders did they place?"),
-    ("📈", "What is our selling price for the Dell XPS 15 i7 and what margin does it generate?"),
-    ("🏆", "Compare buying price vs selling price for the Logitech MX Master 3S — what is our profit per unit?"),
-    ("👥", "Who works on Saturdays and what are their roles?"),
-    ("🔍", "Which client had the highest average order value in Q1 2026?"),
-]
-
 # ─── Historique ───────────────────────────────────────────────────────────────
 
 if "messages" not in st.session_state:
     st.session_state.messages = []
-if "preset_question" not in st.session_state:
-    st.session_state.preset_question = None
 
 
 def render_sources(citations: list[dict]) -> None:
@@ -236,18 +223,6 @@ def render_sources(citations: list[dict]) -> None:
             st.caption(c["excerpt"])
 
 
-# Suggestions de démo — affichées uniquement quand le chat est vide
-if not st.session_state.messages:
-    st.markdown("#### Try these questions")
-    cols = st.columns(2)
-    for i, (icon, question) in enumerate(DEMO_QUESTIONS):
-        with cols[i % 2]:
-            label = f"{icon} {question[:60]}{'…' if len(question) > 60 else ''}"
-            if st.button(label, key=f"demo_{i}", use_container_width=True):
-                st.session_state.preset_question = question
-                st.rerun()
-    st.divider()
-
 # Rendu de l'historique
 for msg in st.session_state.messages:
     with st.chat_message(msg["role"]):
@@ -262,10 +237,7 @@ for msg in st.session_state.messages:
 
 # ─── Input ────────────────────────────────────────────────────────────────────
 
-# Récupérer la question preset (clic sur un bouton de démo) ou la saisie manuelle
-preset = st.session_state.pop("preset_question", None) if st.session_state.get("preset_question") else None
-
-if prompt := (preset or st.chat_input("Ask a question about your documents…")):
+if prompt := st.chat_input("Ask a question about your documents…"):
     with st.chat_message("user"):
         st.markdown(prompt)
     st.session_state.messages.append({"role": "user", "content": prompt})
