@@ -1,5 +1,12 @@
 # Variables d'environnement — ne jamais committer
 .env
+.env.local
+frontend/.env.local
+
+# Frontend
+frontend/node_modules/
+frontend/.next/
+frontend/out/
 
 # Index vectoriel — régénéré automatiquement
 vector_store/

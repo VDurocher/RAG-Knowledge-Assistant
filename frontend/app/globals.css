@@ -1,0 +1,140 @@
+@import "tailwindcss";
+
+/* ─── Design tokens ──────────────────────────────────────────────────────── */
+@theme inline {
+  /* Couleurs */
+  --color-bg:               #09090b;
+  --color-surface:          #0f0d17;
+  --color-surface-elevated: #16112a;
+  --color-border:           #2d1f5e;
+  --color-border-subtle:    #1a1530;
+
+  --color-primary:          #7c3aed;
+  --color-primary-hover:    #6d28d9;
+  --color-accent:           #a78bfa;
+  --color-accent-dim:       #6d28d940;
+
+  --color-text:             #fafafa;
+  --color-text-secondary:   #a1a1aa;
+  --color-muted:            #52525b;
+
+  --color-success:          #10b981;
+  --color-warning:          #f59e0b;
+  --color-error:            #ef4444;
+
+  /* Typographie */
+  --font-sans: var(--font-geist-sans), 'Inter', system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), 'Fira Code', monospace;
+
+  /* Rayons */
+  --radius-sm:  6px;
+  --radius-md:  10px;
+  --radius-lg:  16px;
+  --radius-xl:  24px;
+  --radius-full: 9999px;
+}
+
+/* ─── Base ────────────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+
+html { color-scheme: dark; }
+
+body {
+  background-color: #09090b;
+  color: #fafafa;
+  font-family: var(--font-sans);
+  /* Halo violet subtil en haut de page */
+  background-image: radial-gradient(
+    ellipse 80% 40% at 50% -10%,
+    rgba(124, 58, 237, 0.12),
+    transparent
+  );
+  background-attachment: fixed;
+}
+
+/* ─── Scrollbar custom ────────────────────────────────────────────────────── */
+::-webkit-scrollbar       { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #2d1f5e; border-radius: 9999px; }
+::-webkit-scrollbar-thumb:hover { background: #7c3aed; }
+
+/* ─── Curseur streaming ───────────────────────────────────────────────────── */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+.streaming-cursor {
+  display: inline-block;
+  width: 2px;
+  height: 1em;
+  background: #a78bfa;
+  margin-left: 2px;
+  vertical-align: text-bottom;
+  animation: blink 1s step-end infinite;
+  border-radius: 1px;
+}
+
+/* ─── Glow buttons ────────────────────────────────────────────────────────── */
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(124, 58, 237, 0); }
+  50%       { box-shadow: 0 0 16px 4px rgba(124, 58, 237, 0.25); }
+}
+
+/* ─── Prose (markdown dans les réponses) ──────────────────────────────────── */
+.prose-chat {
+  color: #fafafa;
+  line-height: 1.7;
+  font-size: 0.9375rem;
+}
+.prose-chat strong { color: #fff; font-weight: 600; }
+.prose-chat p { margin: 0.5rem 0; }
+.prose-chat ul, .prose-chat ol { padding-left: 1.25rem; margin: 0.5rem 0; }
+.prose-chat li { margin: 0.25rem 0; }
+.prose-chat code {
+  background: #16112a;
+  border: 1px solid #2d1f5e;
+  border-radius: 4px;
+  padding: 0.1em 0.4em;
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+  color: #a78bfa;
+}
+.prose-chat pre {
+  background: #0f0d17;
+  border: 1px solid #2d1f5e;
+  border-radius: 8px;
+  padding: 1rem;
+  overflow-x: auto;
+  margin: 0.75rem 0;
+}
+.prose-chat pre code {
+  background: none;
+  border: none;
+  padding: 0;
+  color: #e4e4e7;
+}
+.prose-chat a { color: #a78bfa; text-decoration: underline; }
+.prose-chat blockquote {
+  border-left: 3px solid #7c3aed;
+  padding-left: 1rem;
+  color: #a1a1aa;
+  margin: 0.75rem 0;
+}
+
+/* ─── Gradient border input ───────────────────────────────────────────────── */
+.input-gradient-border {
+  position: relative;
+  border-radius: 14px;
+}
+.input-gradient-border::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: 15px;
+  background: linear-gradient(135deg, #7c3aed, #2d1f5e, #7c3aed20);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  pointer-events: none;
+  z-index: 0;
+}
+.input-gradient-border:focus-within::before { opacity: 1; }
