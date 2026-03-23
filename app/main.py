@@ -5,13 +5,12 @@ from pathlib import Path
 
 import streamlit as st
 
-# Permettre les imports depuis la racine du projet
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from core.config import settings
 from core.indexer import load_or_build_index
 from core.loader import list_source_files, load_documents
-from core.rag import RAGResponse, ask_stream, build_llm, build_retriever
+from core.rag import ask_stream, build_llm, build_retriever
 
 # ─── Configuration Streamlit ─────────────────────────────────────────────────
 
@@ -22,142 +21,131 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
-# ─── CSS personnalisé — aspect enterprise ────────────────────────────────────
+# ─── CSS ─────────────────────────────────────────────────────────────────────
 
 st.markdown("""
 <style>
-/* Conteneur du logo */
-.logo-placeholder {
-    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
-    border-radius: 12px;
-    padding: 20px;
+/* Import police */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+
+/* Logo entreprise */
+.logo-wrap {
+    background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 100%);
+    border-radius: 10px;
+    padding: 18px 20px;
     text-align: center;
-    margin-bottom: 20px;
-    border: 1px solid #0f3460;
+    margin-bottom: 16px;
+    border: 1px solid #1e40af33;
 }
-.logo-text {
-    color: #e94560;
-    font-size: 22px;
-    font-weight: 700;
-    letter-spacing: 2px;
-    margin: 0;
-}
-.logo-subtitle {
-    color: #a0a0b0;
-    font-size: 11px;
-    letter-spacing: 1px;
-    margin-top: 4px;
-}
+.logo-name  { color: #60a5fa; font-size: 20px; font-weight: 700; letter-spacing: 3px; margin: 0; }
+.logo-sub   { color: #64748b; font-size: 10px; letter-spacing: 2px; margin-top: 3px; }
 
-/* Badge de statut */
-.status-badge {
-    display: inline-block;
-    padding: 3px 10px;
+/* Badges statut */
+.badge      { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 12px; font-weight: 600; }
+.badge-ok   { background: #052e16; color: #4ade80; border: 1px solid #166534; }
+.badge-err  { background: #450a0a; color: #f87171; border: 1px solid #991b1b; }
+
+/* Chips de source — compactes, inline */
+.sources-row { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+.source-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: #0f1e35;
+    border: 1px solid #1e3a5f;
     border-radius: 20px;
+    padding: 3px 10px 3px 8px;
     font-size: 12px;
-    font-weight: 600;
+    color: #7eb3e8;
+    white-space: nowrap;
 }
-.status-ready { background: #1a3a2e; color: #4caf50; border: 1px solid #4caf50; }
-.status-empty { background: #3a1a1a; color: #f44336; border: 1px solid #f44336; }
+.source-chip .page { color: #4a6a8a; margin-left: 2px; }
 
-/* Bloc citation */
-.citation-block {
-    background: #1e1e2e;
-    border-left: 3px solid #0f3460;
-    border-radius: 0 8px 8px 0;
-    padding: 8px 12px;
-    margin: 4px 0;
+/* Ligne séparatrice légère sous les chips */
+.sources-label { font-size: 11px; color: #4a6a8a; margin-bottom: 4px; letter-spacing: 0.5px; }
+
+/* Bannière fallback */
+.fallback-banner {
+    background: #1c1505;
+    border: 1px solid #854d0e;
+    border-radius: 8px;
+    padding: 8px 14px;
     font-size: 13px;
+    color: #fbbf24;
+    margin-bottom: 8px;
 }
 </style>
 """, unsafe_allow_html=True)
 
 
-# ─── Cache des ressources lourdes ────────────────────────────────────────────
+# ─── Cache pipeline ───────────────────────────────────────────────────────────
 
-@st.cache_resource(show_spinner="Chargement de la base de connaissances...")
+@st.cache_resource(show_spinner="Loading knowledge base…")
 def initialize_rag_pipeline(force_rebuild: bool = False):
-    """
-    Initialise le pipeline RAG au démarrage.
-    Mis en cache pour éviter le rechargement entre les interactions.
-    """
     documents = load_documents(settings.knowledge_base_path)
     vector_store = load_or_build_index(documents, settings, force_rebuild=force_rebuild)
     retriever = build_retriever(vector_store, k=settings.retrieval_k)
     llm = build_llm(settings)
-    return retriever, llm, len(documents)
+    return retriever, llm
 
 
 # ─── Sidebar ─────────────────────────────────────────────────────────────────
 
 with st.sidebar:
-    # Logo placeholder enterprise
     st.markdown("""
-    <div class="logo-placeholder">
-        <p class="logo-text">⬡ ACME CORP</p>
-        <p class="logo-subtitle">KNOWLEDGE ASSISTANT</p>
+    <div class="logo-wrap">
+        <p class="logo-name">⬡ ACME CORP</p>
+        <p class="logo-sub">KNOWLEDGE ASSISTANT</p>
     </div>
     """, unsafe_allow_html=True)
 
-    # Statut de la base de connaissances
     source_files = list_source_files(settings.knowledge_base_path)
 
     if source_files:
         st.markdown(
-            f'<span class="status-badge status-ready">● {len(source_files)} documents indexed</span>',
+            f'<span class="badge badge-ok">● {len(source_files)} documents indexed</span>',
             unsafe_allow_html=True,
         )
     else:
         st.markdown(
-            '<span class="status-badge status-empty">● No documents found</span>',
+            '<span class="badge badge-err">● No documents found</span>',
             unsafe_allow_html=True,
         )
 
     st.divider()
-
-    # ─── Paramètres ───────────────────────────────────────────────────────────
     st.subheader("⚙️ Settings")
 
-    retrieval_k = st.slider(
-        "Results per query",
-        min_value=1,
-        max_value=10,
-        value=settings.retrieval_k,
-        help="Number of document passages retrieved for each question.",
-    )
+    retrieval_k = st.slider("Results per query", 1, 10, settings.retrieval_k)
 
     fallback_enabled = st.toggle(
         "LLM fallback",
         value=True,
-        help="When no relevant documents are found, the AI answers from general knowledge and clearly labels it.",
+        help="When no relevant documents are found, the AI answers from general knowledge.",
     )
 
-    embedder_display = "OpenAI (cloud)" if settings.embedder_type == "openai" else "Local (HuggingFace)"
     if settings.llm_type == "ollama":
-        llm_display = f"Ollama / {settings.ollama_model} (local)"
+        llm_label = f"Ollama / {settings.ollama_model}"
     else:
-        llm_display = f"OpenAI / {settings.openai_chat_model}"
-    st.caption(f"**Embedder:** {embedder_display}")
-    st.caption(f"**LLM:** {llm_display}")
+        llm_label = f"OpenAI / {settings.openai_chat_model}"
+
+    embed_label = "OpenAI" if settings.embedder_type == "openai" else "Local (HuggingFace)"
+    st.caption(f"**LLM:** {llm_label}")
+    st.caption(f"**Embedder:** {embed_label}")
 
     st.divider()
-
-    # ─── Base de connaissances ────────────────────────────────────────────────
     st.subheader("📚 Knowledge Base")
 
-    if source_files:
-        for filename in source_files:
-            icon = "📄" if filename.endswith(".pdf") else "📝"
-            st.caption(f"{icon} {filename}")
-    else:
-        st.info("Add PDF or TXT files to the `knowledge_base/` folder.")
+    for filename in source_files:
+        icon = "📄" if filename.endswith(".pdf") else "📝"
+        st.caption(f"{icon} {filename}")
+
+    if not source_files:
+        st.info("Add PDF or TXT files to `knowledge_base/`.")
 
     st.divider()
 
-    # ─── Actions ──────────────────────────────────────────────────────────────
     if st.button("🔄 Rebuild Index", use_container_width=True, type="secondary"):
         st.cache_resource.clear()
-        st.success("Index cleared. It will be rebuilt on next query.")
         st.rerun()
 
     if st.button("🗑️ Clear Chat", use_container_width=True):
@@ -165,124 +153,111 @@ with st.sidebar:
         st.rerun()
 
 
-# ─── Zone principale ─────────────────────────────────────────────────────────
+# ─── Main ─────────────────────────────────────────────────────────────────────
 
-st.title("🧠 RAG Knowledge Assistant")
-st.caption("Ask questions about your company documents. All answers are grounded in your knowledge base.")
+st.title("🧠 Knowledge Assistant")
+st.caption("Ask questions about your company documents. Answers are grounded in your knowledge base.")
 
-# Vérification de la configuration avant affichage du chat
+# Validation config
 try:
     settings.validate()
-    config_error = None
 except ValueError as error:
-    config_error = str(error)
-
-if config_error:
-    st.error(f"**Configuration error:** {config_error}")
-    st.code("cp .env.example .env\n# Then fill in your OPENAI_API_KEY", language="bash")
+    st.error(f"**Configuration error:** {error}")
+    st.code("cp .env.example .env  # then fill OPENAI_API_KEY", language="bash")
     st.stop()
 
 if not source_files:
-    st.warning(
-        "**No documents found.** Add PDF or TXT files to the `knowledge_base/` folder, then restart the app."
-    )
-    st.code("cp your_document.pdf knowledge_base/", language="bash")
+    st.warning("**No documents found.** Add PDF or TXT files to `knowledge_base/`, then rebuild.")
     st.stop()
 
-# Chargement du pipeline (depuis le cache si disponible)
 try:
-    retriever, llm, doc_count = initialize_rag_pipeline()
-except Exception as pipeline_error:
-    st.error(f"**Pipeline initialization failed:** {pipeline_error}")
+    retriever, llm = initialize_rag_pipeline()
+except Exception as error:
+    st.error(f"**Pipeline error:** {error}")
     st.stop()
 
-# ─── Historique des messages ─────────────────────────────────────────────────
+# ─── Historique ───────────────────────────────────────────────────────────────
 
 if "messages" not in st.session_state:
     st.session_state.messages = []
 
-# Affichage de l'historique de la conversation
-for message in st.session_state.messages:
-    with st.chat_message(message["role"]):
-        st.markdown(message["content"])
 
-        # Ré-affichage du badge fallback pour les messages de l'historique
-        if message["role"] == "assistant" and message.get("is_fallback"):
-            st.warning("⚠️ **Not found in your documents.** Answer from general knowledge.")
+def render_sources(citations: list[dict]) -> None:
+    """Affiche les sources sous forme de chips compactes + excerpts optionnels."""
+    if not citations:
+        return
 
-        # Ré-affichage des citations pour les messages de l'assistant
-        if message["role"] == "assistant" and message.get("citations"):
-            with st.expander(f"📎 Citations ({len(message['citations'])} sources)", expanded=False):
-                for citation in message["citations"]:
-                    st.markdown(
-                        f'<div class="citation-block">📄 <strong>{citation["source"]}</strong>'
-                        + (f' — page {citation["page"]}' if citation.get("page") is not None else "")
-                        + f'<br><em>{citation["excerpt"]}</em></div>',
-                        unsafe_allow_html=True,
-                    )
+    chips_html = '<div class="sources-label">SOURCES</div><div class="sources-row">'
+    for c in citations:
+        page_part = f'<span class="page">· p.{c["page"]}</span>' if c.get("page") else ""
+        chips_html += f'<span class="source-chip">📄 {c["source"]}{page_part}</span>'
+    chips_html += "</div>"
+    st.markdown(chips_html, unsafe_allow_html=True)
 
-# ─── Saisie utilisateur ───────────────────────────────────────────────────────
+    with st.expander("View excerpts", expanded=False):
+        for c in citations:
+            label = f"**{c['source']}**" + (f" — page {c['page']}" if c.get("page") else "")
+            st.markdown(label)
+            st.caption(c["excerpt"])
 
-if prompt := st.chat_input("Ask a question about your documents..."):
-    # Affichage du message utilisateur
+
+# Rendu de l'historique
+for msg in st.session_state.messages:
+    with st.chat_message(msg["role"]):
+        if msg.get("is_fallback"):
+            st.markdown(
+                '<div class="fallback-banner">⚠️ Not in your documents — answer from general knowledge</div>',
+                unsafe_allow_html=True,
+            )
+        st.markdown(msg["content"])
+        if msg["role"] == "assistant" and not msg.get("is_fallback"):
+            render_sources(msg.get("citations", []))
+
+# ─── Input ────────────────────────────────────────────────────────────────────
+
+if prompt := st.chat_input("Ask a question about your documents…"):
     with st.chat_message("user"):
         st.markdown(prompt)
-
     st.session_state.messages.append({"role": "user", "content": prompt})
 
-    # Génération de la réponse avec streaming
     with st.chat_message("assistant"):
-        response_placeholder = st.empty()
-
         is_fallback = False
+        source_docs = []
 
         try:
             stream, source_docs, is_fallback = ask_stream(
                 prompt, retriever, llm, fallback_to_llm=fallback_enabled
             )
 
-            # Avertissement visible AVANT la réponse si fallback activé
             if is_fallback:
-                st.warning(
-                    "⚠️ **Not found in your documents.** "
-                    "This answer is based on the AI's general knowledge — verify before acting on it.",
-                    icon=None,
+                st.markdown(
+                    '<div class="fallback-banner">⚠️ Not in your documents — answer from general knowledge</div>',
+                    unsafe_allow_html=True,
                 )
 
-            # Streaming de la réponse token par token
             full_response = st.write_stream(stream)
 
-        except Exception as generation_error:
-            full_response = f"An error occurred: {generation_error}"
+        except Exception as error:
+            full_response = f"An error occurred: {error}"
             st.error(full_response)
-            source_docs = []
 
-        # Construction des citations (uniquement si réponse documentaire)
+        # Citations — uniquement si l'IA a trouvé des docs (pas en fallback)
         citations: list[dict] = []
-        seen_excerpts: set[str] = set()
-
-        for doc in source_docs:
-            excerpt = doc.page_content[:200].strip().replace("\n", " ")
-            if excerpt not in seen_excerpts:
-                seen_excerpts.add(excerpt)
+        if source_docs:
+            seen: set[str] = set()
+            for doc in source_docs:
+                excerpt = doc.page_content[:180].strip().replace("\n", " ")
+                if excerpt in seen:
+                    continue
+                seen.add(excerpt)
                 page = doc.metadata.get("page")
                 citations.append({
                     "source": doc.metadata.get("source", "Unknown"),
                     "page": page + 1 if page is not None else None,
-                    "excerpt": excerpt + ("..." if len(doc.page_content) > 200 else ""),
+                    "excerpt": excerpt + ("…" if len(doc.page_content) > 180 else ""),
                 })
+            render_sources(citations)
 
-        if citations:
-            with st.expander(f"📎 Citations ({len(citations)} sources)", expanded=True):
-                for citation in citations:
-                    st.markdown(
-                        f'<div class="citation-block">📄 <strong>{citation["source"]}</strong>'
-                        + (f' — page {citation["page"]}' if citation.get("page") is not None else "")
-                        + f'<br><em>{citation["excerpt"]}</em></div>',
-                        unsafe_allow_html=True,
-                    )
-
-    # Sauvegarde dans l'historique
     st.session_state.messages.append({
         "role": "assistant",
         "content": full_response,
