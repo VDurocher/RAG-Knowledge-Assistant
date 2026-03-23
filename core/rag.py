@@ -1,6 +1,7 @@
 """Chaîne RAG : récupération + génération + citations."""
 
 from dataclasses import dataclass
+from typing import Any, Generator
 
 from langchain_community.vectorstores import FAISS
 from langchain_core.documents import Document
@@ -10,7 +11,7 @@ from langchain_core.prompts import ChatPromptTemplate
 
 from core.config import Settings
 
-# Prompt système — instructions strictes pour éviter les hallucinations
+# Prompt RAG strict — réponses ancrées dans les documents uniquement
 _SYSTEM_PROMPT = """You are a precise and professional knowledge assistant for a business.
 Your role is to answer questions using ONLY the provided document context.
 
@@ -23,6 +24,14 @@ Rules:
 Context:
 {context}"""
 
+# Prompt fallback — utilisé quand aucun document pertinent n'est trouvé
+_FALLBACK_PROMPT = """You are a helpful and professional business assistant.
+The user's question could not be answered from the company's internal documents.
+
+Provide a clear, helpful answer based on your general knowledge.
+Be concise and structured. If relevant, suggest what type of internal document
+could help answer this question more precisely in the future."""
+
 
 @dataclass(frozen=True)
 class RAGResponse:
@@ -30,6 +39,7 @@ class RAGResponse:
 
     answer: str
     source_documents: list[Document]
+    is_fallback: bool = False
 
     @property
     def unique_sources(self) -> list[str]:
@@ -81,7 +91,6 @@ def build_llm(settings: Settings) -> BaseChatModel:
             temperature=0.1,
         )
 
-    # Défaut : OpenAI
     from langchain_openai import ChatOpenAI
 
     return ChatOpenAI(
@@ -91,58 +100,47 @@ def build_llm(settings: Settings) -> BaseChatModel:
     )
 
 
-def ask(question: str, retriever, llm: BaseChatModel) -> RAGResponse:
+def ask_stream(
+    question: str,
+    retriever,
+    llm: BaseChatModel,
+    fallback_to_llm: bool = False,
+) -> tuple[Any, list[Document], bool]:
     """
-    Répond à une question en récupérant les passages pertinents et en générant une réponse.
+    Répond en streaming avec citations. Retourne un tuple (stream, source_docs, is_fallback).
+
+    Si fallback_to_llm=True et qu'aucun document pertinent n'est trouvé,
+    le LLM répond depuis ses connaissances générales avec un avertissement clair dans l'UI.
 
     Args:
-        question: Question de l'utilisateur en langage naturel.
+        question: Question de l'utilisateur.
         retriever: Retriever FAISS configuré.
-        llm: Modèle de génération OpenAI.
+        llm: Modèle de génération.
+        fallback_to_llm: Autoriser le fallback sur les connaissances générales du LLM.
 
     Returns:
-        RAGResponse avec la réponse et les documents sources (citations).
-    """
-    # 1. Récupération des passages pertinents
-    source_documents: list[Document] = retriever.invoke(question)
-
-    if not source_documents:
-        return RAGResponse(
-            answer="No relevant information found in the knowledge base for this question.",
-            source_documents=[],
-        )
-
-    # 2. Construction du contexte et de la chaîne de génération
-    context = _format_context(source_documents)
-
-    prompt = ChatPromptTemplate.from_messages([
-        ("system", _SYSTEM_PROMPT),
-        ("human", "{question}"),
-    ])
-
-    chain = prompt | llm | StrOutputParser()
-
-    # 3. Génération de la réponse
-    answer = chain.invoke({"context": context, "question": question})
-
-    return RAGResponse(answer=answer, source_documents=source_documents)
-
-
-def ask_stream(question: str, retriever, llm: BaseChatModel) -> tuple:
-    """
-    Variante streaming de ask() pour une meilleure UX dans Streamlit.
-
-    Returns:
-        Tuple (stream_iterator, source_documents) — le stream est consommé par st.write_stream.
+        (stream_iterator, source_documents, is_fallback)
     """
     source_documents: list[Document] = retriever.invoke(question)
 
+    # Aucun document pertinent trouvé
     if not source_documents:
-        def empty_stream():
+        if fallback_to_llm:
+            # Fallback : réponse depuis les connaissances générales du LLM
+            fallback_prompt = ChatPromptTemplate.from_messages([
+                ("system", _FALLBACK_PROMPT),
+                ("human", "{question}"),
+            ])
+            chain = fallback_prompt | llm | StrOutputParser()
+            return chain.stream({"question": question}), [], True
+
+        # Mode strict : refus sans fallback
+        def _no_docs_stream() -> Generator[str, None, None]:
             yield "No relevant information found in the knowledge base for this question."
 
-        return empty_stream(), []
+        return _no_docs_stream(), [], False
 
+    # Flux RAG normal — réponse ancrée dans les documents
     context = _format_context(source_documents)
 
     prompt = ChatPromptTemplate.from_messages([
@@ -153,4 +151,4 @@ def ask_stream(question: str, retriever, llm: BaseChatModel) -> tuple:
     chain = prompt | llm | StrOutputParser()
     stream = chain.stream({"context": context, "question": question})
 
-    return stream, source_documents
+    return stream, source_documents, False

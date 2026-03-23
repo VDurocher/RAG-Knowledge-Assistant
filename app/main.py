@@ -126,6 +126,12 @@ with st.sidebar:
         help="Number of document passages retrieved for each question.",
     )
 
+    fallback_enabled = st.toggle(
+        "LLM fallback",
+        value=True,
+        help="When no relevant documents are found, the AI answers from general knowledge and clearly labels it.",
+    )
+
     embedder_display = "OpenAI (cloud)" if settings.embedder_type == "openai" else "Local (HuggingFace)"
     if settings.llm_type == "ollama":
         llm_display = f"Ollama / {settings.ollama_model} (local)"
@@ -200,6 +206,10 @@ for message in st.session_state.messages:
     with st.chat_message(message["role"]):
         st.markdown(message["content"])
 
+        # Ré-affichage du badge fallback pour les messages de l'historique
+        if message["role"] == "assistant" and message.get("is_fallback"):
+            st.warning("⚠️ **Not found in your documents.** Answer from general knowledge.")
+
         # Ré-affichage des citations pour les messages de l'assistant
         if message["role"] == "assistant" and message.get("citations"):
             with st.expander(f"📎 Citations ({len(message['citations'])} sources)", expanded=False):
@@ -224,8 +234,20 @@ if prompt := st.chat_input("Ask a question about your documents..."):
     with st.chat_message("assistant"):
         response_placeholder = st.empty()
 
+        is_fallback = False
+
         try:
-            stream, source_docs = ask_stream(prompt, retriever, llm)
+            stream, source_docs, is_fallback = ask_stream(
+                prompt, retriever, llm, fallback_to_llm=fallback_enabled
+            )
+
+            # Avertissement visible AVANT la réponse si fallback activé
+            if is_fallback:
+                st.warning(
+                    "⚠️ **Not found in your documents.** "
+                    "This answer is based on the AI's general knowledge — verify before acting on it.",
+                    icon=None,
+                )
 
             # Streaming de la réponse token par token
             full_response = st.write_stream(stream)
@@ -235,7 +257,7 @@ if prompt := st.chat_input("Ask a question about your documents..."):
             st.error(full_response)
             source_docs = []
 
-        # Construction des citations
+        # Construction des citations (uniquement si réponse documentaire)
         citations: list[dict] = []
         seen_excerpts: set[str] = set()
 
@@ -250,7 +272,6 @@ if prompt := st.chat_input("Ask a question about your documents..."):
                     "excerpt": excerpt + ("..." if len(doc.page_content) > 200 else ""),
                 })
 
-        # Affichage des citations
         if citations:
             with st.expander(f"📎 Citations ({len(citations)} sources)", expanded=True):
                 for citation in citations:
@@ -266,4 +287,5 @@ if prompt := st.chat_input("Ask a question about your documents..."):
         "role": "assistant",
         "content": full_response,
         "citations": citations,
+        "is_fallback": is_fallback,
     })
