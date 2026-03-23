@@ -61,6 +61,21 @@ class Settings:
         default_factory=lambda: int(os.getenv("RETRIEVAL_K", "4"))
     )
 
+    # Seuil de confiance minimum (0.0 = désactivé) — filtre les docs non pertinents
+    retrieval_score_threshold: float = field(
+        default_factory=lambda: float(os.getenv("RETRIEVAL_SCORE_THRESHOLD", "0.3"))
+    )
+
+    # Recherche hybride BM25 + sémantique (nécessite rank-bm25)
+    hybrid_search: bool = field(
+        default_factory=lambda: os.getenv("HYBRID_SEARCH", "false").lower() == "true"
+    )
+
+    # Poids BM25 dans la recherche hybride (0.4 = 40% lexical, 60% sémantique)
+    bm25_weight: float = field(
+        default_factory=lambda: float(os.getenv("BM25_WEIGHT", "0.4"))
+    )
+
     # Chemins des dossiers
     knowledge_base_path: Path = field(default_factory=lambda: Path("knowledge_base"))
     vector_store_path: Path = field(default_factory=lambda: Path("vector_store"))

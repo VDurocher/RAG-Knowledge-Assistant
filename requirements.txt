@@ -20,3 +20,9 @@ streamlit>=1.40.0
 python-dotenv>=1.0.0
 tiktoken>=0.8.0
 
+# Formats de document additionnels
+docx2txt>=0.8
+
+# Recherche hybride BM25 + sémantique (optionnel — requis si HYBRID_SEARCH=true)
+rank-bm25>=0.2.2
+

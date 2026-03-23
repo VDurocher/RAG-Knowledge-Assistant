@@ -1,24 +1,22 @@
-"""Chargement des documents PDF, TXT et CSV depuis le dossier knowledge_base."""
+"""Chargement des documents PDF, TXT, CSV, DOCX et JSON depuis knowledge_base."""
 
 from pathlib import Path
 
 from langchain_community.document_loaders import CSVLoader, PyPDFLoader, TextLoader
 from langchain_core.documents import Document
 
-# Extensions supportées — le CSV est traité à part (logique différente)
+# Extensions texte — même logique de chargement (TextLoader ou loader dédié)
 _TEXT_EXTENSIONS: dict[str, type] = {
     ".pdf": PyPDFLoader,
     ".txt": TextLoader,
     ".md": TextLoader,
+    ".json": TextLoader,  # JSON chargé comme texte brut
 }
-_SUPPORTED_EXTENSIONS = {**_TEXT_EXTENSIONS, ".csv": CSVLoader}
+_SUPPORTED_EXTENSIONS = {**_TEXT_EXTENSIONS, ".csv": CSVLoader, ".docx": None}
 
 
 def _load_csv(file_path: Path) -> list[Document]:
-    """
-    Charge un CSV : chaque ligne devient un Document avec toutes ses colonnes.
-    Le contenu est formaté lisiblement pour le retrieval.
-    """
+    """Charge un CSV : chaque ligne devient un Document avec toutes ses colonnes."""
     loader = CSVLoader(
         str(file_path),
         encoding="utf-8",
@@ -30,23 +28,35 @@ def _load_csv(file_path: Path) -> list[Document]:
     return docs
 
 
+def _load_docx(file_path: Path) -> list[Document]:
+    """Charge un DOCX via Docx2txtLoader (nécessite docx2txt)."""
+    try:
+        from langchain_community.document_loaders import Docx2txtLoader
+    except ImportError:
+        raise ImportError(
+            "Le chargement DOCX nécessite docx2txt. Installez-le avec : pip install docx2txt"
+        )
+    loader = Docx2txtLoader(str(file_path))
+    docs = loader.load()
+    for doc in docs:
+        doc.metadata["source"] = file_path.name
+    return docs
+
+
 def load_documents(knowledge_base_path: Path) -> list[Document]:
     """
-    Charge tous les fichiers PDF/TXT/MD/CSV du dossier spécifié.
+    Charge tous les fichiers supportés du dossier spécifié.
 
-    Chaque document reçoit un metadata['source'] avec le nom du fichier
-    pour permettre les citations dans les réponses.
-
-    Returns:
-        Liste de Document LangChain avec metadata['source'] normalisé.
+    Formats acceptés : PDF, TXT, MD, CSV, DOCX, JSON.
+    Chaque document reçoit metadata['source'] = nom du fichier pour les citations.
 
     Raises:
-        FileNotFoundError: Si le dossier knowledge_base n'existe pas.
+        FileNotFoundError: Si knowledge_base n'existe pas.
     """
     if not knowledge_base_path.exists():
         raise FileNotFoundError(
             f"Dossier introuvable: '{knowledge_base_path}'. "
-            "Créez-le et ajoutez vos fichiers PDF/TXT/CSV."
+            "Créez-le et ajoutez vos fichiers PDF/TXT/CSV/DOCX/JSON."
         )
 
     documents: list[Document] = []
@@ -60,6 +70,8 @@ def load_documents(knowledge_base_path: Path) -> list[Document]:
         try:
             if suffix == ".csv":
                 docs = _load_csv(file_path)
+            elif suffix == ".docx":
+                docs = _load_docx(file_path)
             elif suffix in _TEXT_EXTENSIONS:
                 loader_class = _TEXT_EXTENSIONS[suffix]
                 if loader_class is TextLoader:
