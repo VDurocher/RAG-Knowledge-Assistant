@@ -14,7 +14,7 @@ under 10 minutes with zero infrastructure.
 
 ## Demo
 
-[![Watch the demo](https://cdn.loom.com/sessions/thumbnails/fbe9e758e2d84c6993c3c22855a16d6c-with-play.gif)](https://www.loom.com/share/fbe9e758e2d84c6993c3c22855a16d6c)
+[![Watch the demo](assets/demo-thumbnail.png)](https://www.loom.com/share/fbe9e758e2d84c6993c3c22855a16d6c)
 
 ---
 
