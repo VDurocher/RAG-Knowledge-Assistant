@@ -1,59 +1,59 @@
-ALPHAPRO DISTRIBUTION — CATALOGUE TARIFAIRE 2026
-================================================
-Conditions : Prix HT, minimum de commande 150 EUR, livraison 3-5 jours ouvrés
-Remises volume : -5% dès 10 unités, -10% dès 25 unités, -15% dès 50 unités
-Contact commercial : contact@alphapro.fr | 01 42 56 78 90
-Validité du tarif : 01/01/2026 au 31/12/2026
+ALPHAPRO DISTRIBUTION — B2B PRICE CATALOG 2026
+===============================================
+Terms: Prices excl. VAT. Minimum order: 150 EUR. Delivery: 3-5 business days.
+Volume discounts: -5% from 10 units, -10% from 25 units, -15% from 50 units.
+Sales contact: contact@alphapro.com | +33 1 42 56 78 90
+Catalog validity: Jan 1, 2026 – Dec 31, 2026
 
-INFORMATIQUE — ORDINATEURS PORTABLES
---------------------------------------
-REF-AP-001 | Dell XPS 15 (i7-13700H, 32 Go RAM, 1 To SSD, OLED) | 1 849,00 EUR | Garantie 2 ans
-REF-AP-002 | Dell XPS 15 (i5-13500H, 16 Go RAM, 512 Go SSD) | 1 249,00 EUR | Garantie 2 ans
-REF-AP-003 | MacBook Pro 14" M3 (16 Go, 512 Go) | 1 999,00 EUR | Garantie 1 an Apple
-REF-AP-004 | Lenovo ThinkPad X1 Carbon Gen 12 (i7, 32 Go) | 1 699,00 EUR | Garantie 3 ans
-REF-AP-005 | HP EliteBook 840 G11 (i5, 16 Go, 512 Go) | 1 189,00 EUR | Garantie 3 ans
+LAPTOPS
+-------
+REF-AP-001 | Dell XPS 15 (i7-13700H, 32 GB RAM, 1 TB SSD, OLED)     | 1 849 EUR | 2-year warranty
+REF-AP-002 | Dell XPS 15 (i5-13500H, 16 GB RAM, 512 GB SSD)          | 1 249 EUR | 2-year warranty
+REF-AP-003 | MacBook Pro 14" M3 (16 GB, 512 GB)                      | 1 999 EUR | 1-year Apple warranty
+REF-AP-004 | Lenovo ThinkPad X1 Carbon Gen 12 (i7, 32 GB)            | 1 699 EUR | 3-year warranty
+REF-AP-005 | HP EliteBook 840 G11 (i5, 16 GB, 512 GB)                | 1 189 EUR | 3-year warranty
 
-INFORMATIQUE — ÉCRANS
-----------------------
-REF-AP-010 | LG UltraWide 27" 4K IPS (27UP85R) | 389,00 EUR | Garantie 3 ans
-REF-AP-011 | Samsung 32" Curved QHD (S32BG700) | 449,00 EUR | Garantie 3 ans
-REF-AP-012 | Dell UltraSharp 24" FHD (U2422H) | 289,00 EUR | Garantie 3 ans
-REF-AP-013 | BenQ 27" QHD Designer (PD2705Q) | 419,00 EUR | Garantie 3 ans
+MONITORS
+--------
+REF-AP-010 | LG UltraWide 27" 4K IPS (27UP85R)                       |   389 EUR | 3-year warranty
+REF-AP-011 | Samsung 32" Curved QHD (S32BG700)                       |   449 EUR | 3-year warranty
+REF-AP-012 | Dell UltraSharp 24" FHD (U2422H)                        |   289 EUR | 3-year warranty
+REF-AP-013 | BenQ 27" QHD Designer (PD2705Q)                         |   419 EUR | 3-year warranty
 
-PÉRIPHÉRIQUES — SOURIS & CLAVIERS
------------------------------------
-REF-AP-020 | Logitech MX Master 3S (sans fil) | 89,00 EUR | Garantie 2 ans
-REF-AP-021 | Logitech MX Keys Advanced (sans fil) | 129,00 EUR | Garantie 2 ans
-REF-AP-022 | Apple Magic Mouse (rechargeable) | 79,00 EUR | Garantie 1 an
-REF-AP-023 | Keychron K8 Pro (mécanique, sans fil) | 119,00 EUR | Garantie 1 an
-REF-AP-024 | Microsoft Sculpt Ergonomic (ensemble) | 69,00 EUR | Garantie 1 an
+MICE
+----
+REF-AP-020 | Logitech MX Master 3S (wireless)                        |    89 EUR | 2-year warranty
+REF-AP-021 | Logitech MX Keys Advanced (wireless)                    |   129 EUR | 2-year warranty
+REF-AP-022 | Apple Magic Mouse (rechargeable)                        |    79 EUR | 1-year warranty
+REF-AP-023 | Keychron K8 Pro (mechanical, wireless)                  |   119 EUR | 1-year warranty
+REF-AP-024 | Microsoft Sculpt Ergonomic (set)                        |    69 EUR | 1-year warranty
 
-PÉRIPHÉRIQUES — AUDIO & VIDÉO
--------------------------------
-REF-AP-030 | Jabra Evolve2 85 (ANC, sans fil) | 419,00 EUR | Garantie 2 ans
-REF-AP-031 | Logitech C920 HD Pro Webcam | 89,00 EUR | Garantie 2 ans
-REF-AP-032 | Plantronics Voyager Focus UC | 249,00 EUR | Garantie 2 ans
-REF-AP-033 | Blue Yeti USB Microphone | 129,00 EUR | Garantie 2 ans
+AUDIO & VIDEO
+-------------
+REF-AP-030 | Jabra Evolve2 85 (ANC, wireless)                        |   419 EUR | 2-year warranty
+REF-AP-031 | Logitech C920 HD Pro Webcam                             |    89 EUR | 2-year warranty
+REF-AP-032 | Plantronics Voyager Focus UC                            |   249 EUR | 2-year warranty
+REF-AP-033 | Blue Yeti USB Microphone                                |   129 EUR | 2-year warranty
 
-ACCESSOIRES
+ACCESSORIES
 -----------
-REF-AP-040 | Anker USB-C Hub 7-en-1 | 45,00 EUR | Garantie 18 mois
-REF-AP-041 | CalDigit TS4 Thunderbolt 4 Dock | 369,00 EUR | Garantie 2 ans
-REF-AP-042 | Samsung T7 SSD Externe 1 To | 139,00 EUR | Garantie 3 ans
-REF-AP-043 | Samsung T7 SSD Externe 2 To | 219,00 EUR | Garantie 3 ans
-REF-AP-044 | APC Back-UPS Pro 1500VA | 249,00 EUR | Garantie 2 ans
-REF-AP-045 | Lampe bureau Philips Hue Go | 59,00 EUR | Garantie 2 ans
+REF-AP-040 | Anker USB-C Hub 7-in-1                                  |    45 EUR | 18-month warranty
+REF-AP-041 | CalDigit TS4 Thunderbolt 4 Dock                         |   369 EUR | 2-year warranty
+REF-AP-042 | Samsung T7 External SSD 1 TB                            |   139 EUR | 3-year warranty
+REF-AP-043 | Samsung T7 External SSD 2 TB                            |   219 EUR | 3-year warranty
+REF-AP-044 | APC Back-UPS Pro 1500VA                                 |   249 EUR | 2-year warranty
+REF-AP-045 | Philips Hue Go Desk Lamp                                |    59 EUR | 2-year warranty
 
-MOBILIER & CONFORT
-------------------
-REF-AP-050 | Chaise Ergopro X3 (lombaire réglable, accoudoirs 4D) | 299,00 EUR | Garantie 5 ans
-REF-AP-051 | Chaise Ergopro X5 Pro (appui-tête, mesh premium) | 449,00 EUR | Garantie 5 ans
-REF-AP-052 | Bureau assis-debout électrique 140x70 cm | 699,00 EUR | Garantie 3 ans
-REF-AP-053 | Support écran double bras articulé | 89,00 EUR | Garantie 2 ans
+FURNITURE & ERGONOMICS
+----------------------
+REF-AP-050 | Ergopro X3 Chair (lumbar support, 4D armrests)          |   299 EUR | 5-year warranty
+REF-AP-051 | Ergopro X5 Pro Chair (headrest, premium mesh)           |   449 EUR | 5-year warranty
+REF-AP-052 | Electric sit-stand desk 140x70 cm                       |   699 EUR | 3-year warranty
+REF-AP-053 | Dual monitor arm (articulated)                          |    89 EUR | 2-year warranty
 
-IMPRESSION
-----------
-REF-AP-060 | HP LaserJet Pro M404dn (réseau, recto-verso) | 329,00 EUR | Garantie 1 an
-REF-AP-061 | Brother HL-L8360CDW (couleur, réseau) | 449,00 EUR | Garantie 1 an
-REF-AP-062 | Cartouche toner HP CF259A (3 000 pages) | 29,00 EUR
-REF-AP-063 | Rame papier A4 80g/m² (5 x 500 feuilles) | 24,00 EUR
+PRINTING
+--------
+REF-AP-060 | HP LaserJet Pro M404dn (network, duplex)                |   329 EUR | 1-year warranty
+REF-AP-061 | Brother HL-L8360CDW (color, network)                   |   449 EUR | 1-year warranty
+REF-AP-062 | HP CF259A Toner Cartridge (3,000 pages)                 |    29 EUR
+REF-AP-063 | A4 80g/m² Paper (5 x 500 sheets)                       |    24 EUR

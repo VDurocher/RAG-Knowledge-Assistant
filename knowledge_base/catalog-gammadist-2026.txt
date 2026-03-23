@@ -1,73 +1,73 @@
-GAMMADIST SOLUTIONS — TARIFS PROFESSIONNELS 2026
-================================================
-Paiement : virement 45 jours ou prélèvement -2% (escompte immédiat)
-Livraison express 24h disponible (+25 EUR). Standard : 5-7 jours ouvrés
-Garantie retour 30 jours sans justification sur tout le catalogue
-SAV dédié entreprises : 0800 123 456 (gratuit, 8h-18h)
-Tarifs applicables du 01/01/2026 au 30/06/2026 (révision semestrielle)
+GAMMADIST SOLUTIONS — PROFESSIONAL PRICE LIST 2026
+===================================================
+Payment: bank transfer 45 days or direct debit (-2% early payment discount)
+Express delivery 24h available (+25 EUR). Standard: 5-7 business days.
+30-day no-questions-asked return on all catalog items.
+Dedicated business support: 0800 123 456 (toll-free, 8am-6pm)
+Prices valid Jan 1 – Jun 30, 2026 (revised semi-annually)
 
-LAPTOPS & STATIONS DE TRAVAIL
--------------------------------
-GD-NB-01 | Dell XPS 15 9530 — i7/32Go/1To/OLED | PRIX : 1 899,00 EUR HT | Stock : disponible
-GD-NB-02 | Dell XPS 15 9530 — i5/16Go/512Go | PRIX : 1 299,00 EUR HT | Stock : disponible
-GD-NB-03 | Apple MacBook Pro 14" M3 / 16Go / 512Go | PRIX : 1 949,00 EUR HT | Stock : 8 unités
-GD-NB-04 | Lenovo ThinkPad X1 Carbon G12 / i7 / 32Go | PRIX : 1 589,00 EUR HT | Stock : disponible
-GD-NB-05 | Dell Precision 5690 (station mobile, i9) | PRIX : 2 849,00 EUR HT | Stock : sur commande
+LAPTOPS & WORKSTATIONS
+-----------------------
+GD-NB-01 | Dell XPS 15 9530 — i7/32 GB/1 TB/OLED           | PRICE: 1 899 EUR | Stock: available
+GD-NB-02 | Dell XPS 15 9530 — i5/16 GB/512 GB              | PRICE: 1 299 EUR | Stock: available
+GD-NB-03 | Apple MacBook Pro 14" M3 / 16 GB / 512 GB       | PRICE: 1 949 EUR | Stock: 8 units
+GD-NB-04 | Lenovo ThinkPad X1 Carbon G12 / i7 / 32 GB      | PRICE: 1 589 EUR | Stock: available
+GD-NB-05 | Dell Precision 5690 (mobile workstation, i9)    | PRICE: 2 849 EUR | Stock: on order
 
-MONITEURS
-----------
-GD-MN-01 | LG 27UP85R 27" 4K UltraWide IPS | PRIX : 375,00 EUR HT | Stock : disponible
-GD-MN-02 | Samsung S32BG700 32" QHD 165Hz | PRIX : 459,00 EUR HT | Stock : disponible
-GD-MN-03 | Dell U2422H 24" FHD IPS | PRIX : 268,00 EUR HT | Stock : >20 unités
-GD-MN-04 | BenQ PD2706UA 27" 4K Designer | PRIX : 649,00 EUR HT | Stock : 3 unités
+MONITORS
+--------
+GD-MN-01 | LG 27UP85R 27" 4K UltraWide IPS                 | PRICE:   375 EUR | Stock: available
+GD-MN-02 | Samsung S32BG700 32" QHD 165Hz                  | PRICE:   459 EUR | Stock: available
+GD-MN-03 | Dell U2422H 24" FHD IPS                         | PRICE:   268 EUR | Stock: >20 units
+GD-MN-04 | BenQ PD2706UA 27" 4K Designer                   | PRICE:   649 EUR | Stock: 3 units
 
-PÉRIPHÉRIQUES POINTEURS
-------------------------
-GD-MS-01 | Logitech MX Master 3S | PRIX : 94,00 EUR HT
-GD-MS-02 | Apple Magic Mouse (rechargeable) | PRIX : 76,00 EUR HT
-GD-MS-03 | Logitech Lift Vertical Ergonomic | PRIX : 55,00 EUR HT
-GD-MS-04 | Microsoft Bluetooth Ergonomic | PRIX : 49,00 EUR HT
+MICE
+----
+GD-MS-01 | Logitech MX Master 3S                            | PRICE:    94 EUR
+GD-MS-02 | Apple Magic Mouse (rechargeable)                 | PRICE:    76 EUR
+GD-MS-03 | Logitech Lift Vertical Ergonomic                 | PRICE:    55 EUR
+GD-MS-04 | Microsoft Bluetooth Ergonomic                    | PRICE:    49 EUR
 
-CLAVIERS
+KEYBOARDS
 ---------
-GD-KB-01 | Logitech MX Keys Advanced | PRIX : 134,00 EUR HT
-GD-KB-02 | Keychron K8 Pro (sans fil, mécanique) | PRIX : 109,00 EUR HT
-GD-KB-03 | Apple Magic Keyboard Touch ID | PRIX : 99,00 EUR HT
-GD-KB-04 | Logitech K780 Multi-Device | PRIX : 79,00 EUR HT
+GD-KB-01 | Logitech MX Keys Advanced                        | PRICE:   134 EUR
+GD-KB-02 | Keychron K8 Pro (wireless, mechanical)           | PRICE:   109 EUR
+GD-KB-03 | Apple Magic Keyboard Touch ID                    | PRICE:    99 EUR
+GD-KB-04 | Logitech K780 Multi-Device                       | PRICE:    79 EUR
 
-AUDIO / VIDÉO
---------------
-GD-AV-01 | Jabra Evolve2 85 Casque ANC | PRIX : 435,00 EUR HT
-GD-AV-02 | Jabra Speak 750 Conférence USB | PRIX : 289,00 EUR HT
-GD-AV-03 | Logitech C920 Webcam 1080p | PRIX : 94,00 EUR HT
-GD-AV-04 | Poly Studio P5 Webcam 1080p | PRIX : 119,00 EUR HT
+AUDIO & VIDEO
+-------------
+GD-AV-01 | Jabra Evolve2 85 ANC Headset                     | PRICE:   435 EUR
+GD-AV-02 | Jabra Speak 750 Conference USB                   | PRICE:   289 EUR
+GD-AV-03 | Logitech C920 Webcam 1080p                       | PRICE:    94 EUR
+GD-AV-04 | Poly Studio P5 Webcam 1080p                      | PRICE:   119 EUR
 
-STOCKAGE EXTERNE
------------------
-GD-ST-01 | Samsung T7 SSD Externe 1 To | PRIX : 132,00 EUR HT
-GD-ST-02 | Samsung T7 SSD Externe 2 To | PRIX : 209,00 EUR HT
-GD-ST-03 | Seagate One Touch 2 To | PRIX : 69,00 EUR HT
+EXTERNAL STORAGE
+----------------
+GD-ST-01 | Samsung T7 External SSD 1 TB                     | PRICE:   132 EUR
+GD-ST-02 | Samsung T7 External SSD 2 TB                     | PRICE:   209 EUR
+GD-ST-03 | Seagate One Touch 2 TB                           | PRICE:    69 EUR
 
 HUBS & DOCKS
--------------
-GD-HB-01 | Anker 7-en-1 USB-C Hub | PRIX : 48,00 EUR HT
-GD-HB-02 | CalDigit TS4 Thunderbolt 4 Dock | PRIX : 359,00 EUR HT
-GD-HB-03 | Baseus 12-en-1 Hub (HDMI 4K, Ethernet) | PRIX : 59,00 EUR HT
+------------
+GD-HB-01 | Anker 7-in-1 USB-C Hub                          | PRICE:    48 EUR
+GD-HB-02 | CalDigit TS4 Thunderbolt 4 Dock                  | PRICE:   359 EUR
+GD-HB-03 | Baseus 12-in-1 Hub (4K HDMI, Ethernet)          | PRICE:    59 EUR
 
-ALIMENTATION
--------------
-GD-UPS-01 | APC Back-UPS Pro 1500VA | PRIX : 259,00 EUR HT
-GD-UPS-02 | Eaton 5E 1100VA USB | PRIX : 119,00 EUR HT
+POWER
+-----
+GD-UPS-01 | APC Back-UPS Pro 1500VA                         | PRICE:   259 EUR
+GD-UPS-02 | Eaton 5E 1100VA USB                             | PRICE:   119 EUR
 
-MOBILIER
+FURNITURE
 ---------
-GD-MB-01 | Chaise Ergopro X3 (lombaire, accoudoirs 4D) | PRIX : 315,00 EUR HT | Garantie 5 ans
-GD-MB-02 | Chaise Ergopro X5 Pro (premium mesh) | PRIX : 469,00 EUR HT | Garantie 5 ans
-GD-MB-03 | Bureau assis-debout 160x80 cm motorisé | PRIX : 799,00 EUR HT | Garantie 3 ans
-GD-MB-04 | Lampe Philips Hue Go bureau | PRIX : 54,00 EUR HT
+GD-MB-01 | Ergopro X3 Chair (lumbar, 4D armrests)           | PRICE:   315 EUR | 5-year warranty
+GD-MB-02 | Ergopro X5 Pro Chair (premium mesh)              | PRICE:   469 EUR | 5-year warranty
+GD-MB-03 | Motorized sit-stand desk 160x80 cm               | PRICE:   799 EUR | 3-year warranty
+GD-MB-04 | Philips Hue Go Desk Lamp                         | PRICE:    54 EUR
 
-IMPRESSION
-----------
-GD-PR-01 | HP LaserJet Pro M404dn | PRIX : 319,00 EUR HT
-GD-PR-02 | Toner HP CF259A | PRIX : 26,00 EUR HT
-GD-PR-03 | Papier Hammermill Copy Plus A4 80g (5 rames) | PRIX : 22,50 EUR HT
+PRINTING
+--------
+GD-PR-01 | HP LaserJet Pro M404dn                           | PRICE:   319 EUR
+GD-PR-02 | HP CF259A Toner Cartridge                        | PRICE:    26 EUR
+GD-PR-03 | Hammermill Copy Plus A4 80g (5 reams)            | PRICE:  22,50 EUR

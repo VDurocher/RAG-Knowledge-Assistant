@@ -1,179 +1,179 @@
-NEXUS SUPPLY CO. — HISTORIQUE ACHATS CLIENTS Q1 2026
-=====================================================
-Période : 01/01/2026 au 31/03/2026
-Document généré le : 31/03/2026
-Responsable comptes : Marie Fontaine (m.fontaine@nexussupply.fr)
+NEXUS SUPPLY CO. — CLIENT PURCHASE HISTORY Q1 2026
+====================================================
+Period: January 1 – March 31, 2026
+Generated: March 31, 2026
+Account manager: Marie Fontaine (m.fontaine@nexussupply.com)
 
-===========================================================
-CLIENT : ACME TECH SOLUTIONS
-Numéro client : CLI-0042
-Secteur : ESN / Conseil IT
-Conditions : paiement 30 jours — statut : OR (>15K/an)
-===========================================================
+=============================================================
+CLIENT: ACME TECH SOLUTIONS
+Client ID: CLI-0042
+Industry: IT Services & Consulting
+Payment terms: 30 days — Status: GOLD (>15K/yr)
+=============================================================
 
-Commande #2026-0112 — 08/01/2026 — Fournisseur : AlphaPro
-  - Dell XPS 15 (i7/32Go) x3 ..................... 5 547,00 EUR
-  - Logitech MX Master 3S x3 ....................... 267,00 EUR
-  - Logitech MX Keys Advanced x3 .................. 387,00 EUR
-  SOUS-TOTAL : 6 201,00 EUR HT
+Order #2026-0112 — Jan 8, 2026 — Supplier: AlphaPro
+  - Dell XPS 15 (i7/32 GB) x3 ....................... 5 547 EUR
+  - Logitech MX Master 3S x3 ........................... 267 EUR
+  - Logitech MX Keys Advanced x3 ........................ 387 EUR
+  SUBTOTAL: 6 201 EUR
 
-Commande #2026-0198 — 22/01/2026 — Fournisseur : BetaSupply
-  - LG 27UP85R 27" 4K x5 ........................ 2 060,00 EUR
-  - CalDigit TS4 Dock x5 ........................ 1 945,00 EUR
-  SOUS-TOTAL : 4 005,00 EUR HT
+Order #2026-0198 — Jan 22, 2026 — Supplier: BetaSupply
+  - LG 27UP85R 27" 4K x5 .......................... 2 060 EUR
+  - CalDigit TS4 Dock x5 .......................... 1 945 EUR
+  SUBTOTAL: 4 005 EUR
 
-Commande #2026-0341 — 14/02/2026 — Fournisseur : AlphaPro
-  - Chaise Ergopro X3 x4 ........................ 1 196,00 EUR
-  - Bureau assis-debout 140x70 x2 ............... 1 398,00 EUR
-  SOUS-TOTAL : 2 594,00 EUR HT
+Order #2026-0341 — Feb 14, 2026 — Supplier: AlphaPro
+  - Ergopro X3 Chair x4 ........................... 1 196 EUR
+  - Electric sit-stand desk 140x70 x2 .............. 1 398 EUR
+  SUBTOTAL: 2 594 EUR
 
-Commande #2026-0489 — 05/03/2026 — Fournisseur : GammaDist
-  - Samsung T7 SSD 1 To x6 ........................ 792,00 EUR
-  - Anker USB-C Hub x6 ............................. 288,00 EUR
-  SOUS-TOTAL : 1 080,00 EUR HT
+Order #2026-0489 — Mar 5, 2026 — Supplier: GammaDist
+  - Samsung T7 SSD 1 TB x6 ........................... 792 EUR
+  - Anker USB-C Hub x6 ............................... 288 EUR
+  SUBTOTAL: 1 080 EUR
 
-Commande #2026-0601 — 20/03/2026 — Fournisseur : BetaSupply
-  - Dell XPS 15 (i7/32Go) x2 ..................... 3 558,00 EUR
-  - Jabra Evolve2 85 x2 ............................ 798,00 EUR
-  SOUS-TOTAL : 4 356,00 EUR HT
+Order #2026-0601 — Mar 20, 2026 — Supplier: BetaSupply
+  - Dell XPS 15 (i7/32 GB) x2 ..................... 3 558 EUR
+  - Jabra Evolve2 85 x2 ............................... 798 EUR
+  SUBTOTAL: 4 356 EUR
 
-TOTAL Q1 2026 — ACME TECH SOLUTIONS : 18 236,00 EUR HT
-Nombre de commandes : 5 | Panier moyen : 3 647,20 EUR
+TOTAL Q1 2026 — ACME TECH SOLUTIONS: 18 236 EUR
+Orders: 5 | Average order value: 3 647 EUR
 
-===========================================================
-CLIENT : BLUE RIDGE CONSULTING
-Numéro client : CLI-0078
-Secteur : Cabinet de conseil stratégique
-Conditions : paiement 45 jours — statut : ARGENT (>5K/an)
-===========================================================
+=============================================================
+CLIENT: BLUE RIDGE CONSULTING
+Client ID: CLI-0078
+Industry: Strategy Consulting
+Payment terms: 45 days — Status: SILVER (>5K/yr)
+=============================================================
 
-Commande #2026-0145 — 12/01/2026 — Fournisseur : BetaSupply
-  - Dell XPS 15 (i5/16Go) x2 ..................... 2 378,00 EUR
-  - Logitech C920 Webcam x2 ........................ 158,00 EUR
-  - Jabra Evolve2 85 x1 ............................ 399,00 EUR
-  SOUS-TOTAL : 2 935,00 EUR HT
+Order #2026-0145 — Jan 12, 2026 — Supplier: BetaSupply
+  - Dell XPS 15 (i5/16 GB) x2 ..................... 2 378 EUR
+  - Logitech C920 Webcam x2 ........................... 158 EUR
+  - Jabra Evolve2 85 x1 ............................... 399 EUR
+  SUBTOTAL: 2 935 EUR
 
-Commande #2026-0287 — 03/02/2026 — Fournisseur : AlphaPro
-  - HP LaserJet Pro M404dn x1 ...................... 329,00 EUR
-  - Rame papier A4 80g x10 ......................... 240,00 EUR
-  - Cartouche toner HP x5 .......................... 145,00 EUR
-  SOUS-TOTAL : 714,00 EUR HT
+Order #2026-0287 — Feb 3, 2026 — Supplier: AlphaPro
+  - HP LaserJet Pro M404dn x1 ......................... 329 EUR
+  - A4 80g paper x10 reams ............................ 240 EUR
+  - HP Toner cartridge x5 ............................. 145 EUR
+  SUBTOTAL: 714 EUR
 
-Commande #2026-0412 — 19/02/2026 — Fournisseur : GammaDist
-  - Chaise Ergopro X3 x3 .......................... 945,00 EUR
-  - Lampe Philips Hue Go x3 ....................... 162,00 EUR
-  SOUS-TOTAL : 1 107,00 EUR HT
+Order #2026-0412 — Feb 19, 2026 — Supplier: GammaDist
+  - Ergopro X3 Chair x3 ............................... 945 EUR
+  - Philips Hue Go Desk Lamp x3 ....................... 162 EUR
+  SUBTOTAL: 1 107 EUR
 
-Commande #2026-0534 — 11/03/2026 — Fournisseur : BetaSupply
-  - LG 27UP85R 27" 4K x3 ........................ 1 236,00 EUR
-  - Logitech MX Master 3S x3 ....................... 246,00 EUR
-  SOUS-TOTAL : 1 482,00 EUR HT
+Order #2026-0534 — Mar 11, 2026 — Supplier: BetaSupply
+  - LG 27UP85R 27" 4K x3 .......................... 1 236 EUR
+  - Logitech MX Master 3S x3 ........................... 246 EUR
+  SUBTOTAL: 1 482 EUR
 
-TOTAL Q1 2026 — BLUE RIDGE CONSULTING : 6 238,00 EUR HT
-Nombre de commandes : 4 | Panier moyen : 1 559,50 EUR
+TOTAL Q1 2026 — BLUE RIDGE CONSULTING: 6 238 EUR
+Orders: 4 | Average order value: 1 560 EUR
 
-===========================================================
-CLIENT : METRO DIGITAL AGENCY
-Numéro client : CLI-0115
-Secteur : Agence de communication digitale
-Conditions : paiement 30 jours — statut : PLATINE (>40K/an)
-===========================================================
+=============================================================
+CLIENT: METRO DIGITAL AGENCY
+Client ID: CLI-0115
+Industry: Digital Marketing Agency
+Payment terms: 30 days — Status: PLATINUM (>40K/yr)
+=============================================================
 
-Commande #2026-0133 — 09/01/2026 — Fournisseur : GammaDist
-  - MacBook Pro 14" M3 x4 ........................ 7 796,00 EUR
-  - Apple Magic Mouse x4 ........................... 304,00 EUR
-  - Apple Magic Keyboard Touch ID x4 .............. 396,00 EUR
-  SOUS-TOTAL : 8 496,00 EUR HT
+Order #2026-0133 — Jan 9, 2026 — Supplier: GammaDist
+  - MacBook Pro 14" M3 x4 .......................... 7 796 EUR
+  - Apple Magic Mouse x4 ............................... 304 EUR
+  - Apple Magic Keyboard Touch ID x4 .................. 396 EUR
+  SUBTOTAL: 8 496 EUR
 
-Commande #2026-0221 — 27/01/2026 — Fournisseur : AlphaPro
-  - BenQ 27" QHD PD2705Q x6 ..................... 2 514,00 EUR
-  - CalDigit TS4 Dock x4 ........................ 1 476,00 EUR
-  SOUS-TOTAL : 3 990,00 EUR HT
+Order #2026-0221 — Jan 27, 2026 — Supplier: AlphaPro
+  - BenQ 27" QHD PD2705Q x6 ....................... 2 514 EUR
+  - CalDigit TS4 Dock x4 .......................... 1 476 EUR
+  SUBTOTAL: 3 990 EUR
 
-Commande #2026-0359 — 17/02/2026 — Fournisseur : GammaDist
-  - MacBook Pro 14" M3 x2 ........................ 3 898,00 EUR
-  - Samsung T7 SSD 2 To x4 ........................ 836,00 EUR
-  SOUS-TOTAL : 4 734,00 EUR HT
+Order #2026-0359 — Feb 17, 2026 — Supplier: GammaDist
+  - MacBook Pro 14" M3 x2 .......................... 3 898 EUR
+  - Samsung T7 SSD 2 TB x4 ............................ 836 EUR
+  SUBTOTAL: 4 734 EUR
 
-Commande #2026-0467 — 28/02/2026 — Fournisseur : BetaSupply
-  - Jabra Evolve2 85 x8 .......................... 3 192,00 EUR
-  - Logitech C920 x4 ............................... 316,00 EUR
-  SOUS-TOTAL : 3 508,00 EUR HT
+Order #2026-0467 — Feb 28, 2026 — Supplier: BetaSupply
+  - Jabra Evolve2 85 x8 ............................ 3 192 EUR
+  - Logitech C920 x4 .................................. 316 EUR
+  SUBTOTAL: 3 508 EUR
 
-Commande #2026-0578 — 14/03/2026 — Fournisseur : AlphaPro
-  - Chaise Ergopro X5 Pro x5 ..................... 2 245,00 EUR
-  - Bureau assis-debout x3 ....................... 2 097,00 EUR
-  SOUS-TOTAL : 4 342,00 EUR HT
+Order #2026-0578 — Mar 14, 2026 — Supplier: AlphaPro
+  - Ergopro X5 Pro Chair x5 ....................... 2 245 EUR
+  - Electric sit-stand desk x3 ..................... 2 097 EUR
+  SUBTOTAL: 4 342 EUR
 
-Commande #2026-0644 — 25/03/2026 — Fournisseur : GammaDist
-  - Dell U2422H 24" x3 ............................. 804,00 EUR
-  - Poly Studio P5 Webcam x3 ...................... 357,00 EUR
-  SOUS-TOTAL : 1 161,00 EUR HT
+Order #2026-0644 — Mar 25, 2026 — Supplier: GammaDist
+  - Dell U2422H 24" x3 ................................ 804 EUR
+  - Poly Studio P5 Webcam x3 .......................... 357 EUR
+  SUBTOTAL: 1 161 EUR
 
-TOTAL Q1 2026 — METRO DIGITAL AGENCY : 26 231,00 EUR HT
-Nombre de commandes : 6 | Panier moyen : 4 371,83 EUR
+TOTAL Q1 2026 — METRO DIGITAL AGENCY: 26 231 EUR
+Orders: 6 | Average order value: 4 372 EUR
 
-===========================================================
-CLIENT : HARBOR VIEW PRODUCTIONS
-Numéro client : CLI-0203
-Secteur : Production audiovisuelle
-Conditions : paiement 60 jours — statut : ARGENT (>5K/an)
-===========================================================
+=============================================================
+CLIENT: HARBOR VIEW PRODUCTIONS
+Client ID: CLI-0203
+Industry: Audiovisual Production
+Payment terms: 60 days — Status: SILVER (>5K/yr)
+=============================================================
 
-Commande #2026-0172 — 16/01/2026 — Fournisseur : BetaSupply
-  - ASUS ProArt Studiobook 16 x2 ................. 4 598,00 EUR
-  - Jabra Evolve2 85 x2 ............................ 798,00 EUR
-  SOUS-TOTAL : 5 396,00 EUR HT
+Order #2026-0172 — Jan 16, 2026 — Supplier: BetaSupply
+  - ASUS ProArt Studiobook 16 x2 ................... 4 598 EUR
+  - Jabra Evolve2 85 x2 ............................... 798 EUR
+  SUBTOTAL: 5 396 EUR
 
-Commande #2026-0445 — 24/02/2026 — Fournisseur : GammaDist
-  - Samsung T7 SSD 2 To x8 ....................... 1 672,00 EUR
-  - Anker USB-C Hub x4 ............................. 192,00 EUR
-  SOUS-TOTAL : 1 864,00 EUR HT
+Order #2026-0445 — Feb 24, 2026 — Supplier: GammaDist
+  - Samsung T7 SSD 2 TB x8 ......................... 1 672 EUR
+  - Anker USB-C Hub x4 ................................ 192 EUR
+  SUBTOTAL: 1 864 EUR
 
-TOTAL Q1 2026 — HARBOR VIEW PRODUCTIONS : 7 260,00 EUR HT
-Nombre de commandes : 2 | Panier moyen : 3 630,00 EUR
+TOTAL Q1 2026 — HARBOR VIEW PRODUCTIONS: 7 260 EUR
+Orders: 2 | Average order value: 3 630 EUR
 
-===========================================================
-CLIENT : SUMMIT FINANCE GROUP
-Numéro client : CLI-0267
-Secteur : Services financiers & gestion de patrimoine
-Conditions : paiement 30 jours — statut : OR (>15K/an)
-===========================================================
+=============================================================
+CLIENT: SUMMIT FINANCE GROUP
+Client ID: CLI-0267
+Industry: Financial Services & Wealth Management
+Payment terms: 30 days — Status: GOLD (>15K/yr)
+=============================================================
 
-Commande #2026-0156 — 13/01/2026 — Fournisseur : AlphaPro
-  - Lenovo ThinkPad X1 Carbon x5 ................. 8 495,00 EUR
-  - Logitech MX Master 3S x5 ...................... 445,00 EUR
-  - Logitech MX Keys Advanced x5 .................. 645,00 EUR
-  SOUS-TOTAL : 9 585,00 EUR HT
+Order #2026-0156 — Jan 13, 2026 — Supplier: AlphaPro
+  - Lenovo ThinkPad X1 Carbon x5 ................... 8 495 EUR
+  - Logitech MX Master 3S x5 ........................... 445 EUR
+  - Logitech MX Keys Advanced x5 ....................... 645 EUR
+  SUBTOTAL: 9 585 EUR
 
-Commande #2026-0298 — 06/02/2026 — Fournisseur : AlphaPro
-  - APC Back-UPS Pro 1500VA x4 ................... 996,00 EUR
-  - HP LaserJet Pro M404dn x2 ...................... 658,00 EUR
-  SOUS-TOTAL : 1 654,00 EUR HT
+Order #2026-0298 — Feb 6, 2026 — Supplier: AlphaPro
+  - APC Back-UPS Pro 1500VA x4 ...................... 996 EUR
+  - HP LaserJet Pro M404dn x2 ......................... 658 EUR
+  SUBTOTAL: 1 654 EUR
 
-Commande #2026-0503 — 09/03/2026 — Fournisseur : BetaSupply
-  - Dell UltraSharp 24" U2422H x6 ............... 1 650,00 EUR
-  - Chaise Ergopro X3 x6 ........................ 1 674,00 EUR
-  SOUS-TOTAL : 3 324,00 EUR HT
+Order #2026-0503 — Mar 9, 2026 — Supplier: BetaSupply
+  - Dell UltraSharp 24" U2422H x6 .................. 1 650 EUR
+  - Ergopro X3 Chair x6 ............................ 1 674 EUR
+  SUBTOTAL: 3 324 EUR
 
-Commande #2026-0622 — 24/03/2026 — Fournisseur : GammaDist
-  - Lenovo ThinkPad X1 Carbon x2 ................. 3 178,00 EUR
-  - Samsung T7 SSD 1 To x4 ........................ 528,00 EUR
-  SOUS-TOTAL : 3 706,00 EUR HT
+Order #2026-0622 — Mar 24, 2026 — Supplier: GammaDist
+  - Lenovo ThinkPad X1 Carbon x2 ................... 3 178 EUR
+  - Samsung T7 SSD 1 TB x4 ............................ 528 EUR
+  SUBTOTAL: 3 706 EUR
 
-TOTAL Q1 2026 — SUMMIT FINANCE GROUP : 18 269,00 EUR HT
-Nombre de commandes : 4 | Panier moyen : 4 567,25 EUR
+TOTAL Q1 2026 — SUMMIT FINANCE GROUP: 18 269 EUR
+Orders: 4 | Average order value: 4 567 EUR
 
-===========================================================
-RÉCAPITULATIF Q1 2026 — TOUS CLIENTS
-===========================================================
-Acme Tech Solutions .......... 18 236,00 EUR (5 commandes)
-Blue Ridge Consulting ......... 6 238,00 EUR (4 commandes)
-Metro Digital Agency ......... 26 231,00 EUR (6 commandes)
-Harbor View Productions ....... 7 260,00 EUR (2 commandes)
-Summit Finance Group ......... 18 269,00 EUR (4 commandes)
-----------------------------------------------------------
-TOTAL GÉNÉRAL Q1 2026 : 76 234,00 EUR HT (21 commandes)
-Chiffre d'affaires moyen par client : 15 246,80 EUR
-Client le plus actif : Metro Digital Agency
-Client avec le panier moyen le plus élevé : Summit Finance Group (4 567,25 EUR)
+=============================================================
+Q1 2026 SUMMARY — ALL CLIENTS
+=============================================================
+Acme Tech Solutions .......... 18 236 EUR (5 orders)
+Blue Ridge Consulting ......... 6 238 EUR (4 orders)
+Metro Digital Agency ......... 26 231 EUR (6 orders)
+Harbor View Productions ....... 7 260 EUR (2 orders)
+Summit Finance Group ......... 18 269 EUR (4 orders)
+-----------------------------------------------------------
+GRAND TOTAL Q1 2026: 76 234 EUR (21 orders)
+Average revenue per client: 15 247 EUR
+Most active client: Metro Digital Agency (6 orders, 26 231 EUR)
+Highest average order value: Summit Finance Group (4 567 EUR)

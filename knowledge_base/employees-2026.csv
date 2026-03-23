@@ -1,13 +1,13 @@
-id,nom,prenom,poste,departement,contrat,heures_semaine,planning,responsable,telephone,email,date_embauche
-EMP-001,Martin,Sophie,Responsable commerciale,Commercial,CDI,39,Lun-Ven 9h00-18h00,Direction,06 12 34 56 78,s.martin@nexussupply.fr,2019-03-15
-EMP-002,Berger,Thomas,Responsable achats,Achats,CDI,39,Lun-Ven 8h00-17h00,Direction,06 23 45 67 89,t.berger@nexussupply.fr,2018-09-01
-EMP-003,Dupont,Julie,Commerciale senior,Commercial,CDI,35,Lun-Ven 9h00-17h30,Sophie Martin,06 34 56 78 90,j.dupont@nexussupply.fr,2021-06-07
-EMP-004,Rousseau,Marc,Commercial,Commercial,CDI,35,Mar-Sam 9h00-17h30,Sophie Martin,06 45 67 89 01,m.rousseau@nexussupply.fr,2022-01-10
-EMP-005,Chen,Lisa,Acheteuse,Achats,CDI,35,Lun-Ven 8h30-16h30,Thomas Berger,06 56 78 90 12,l.chen@nexussupply.fr,2023-04-03
-EMP-006,Petit,Antoine,Chef magasinier,Logistique,CDI,39,Lun-Ven 7h00-15h00,Direction,06 67 89 01 23,a.petit@nexussupply.fr,2017-11-20
-EMP-007,Moreau,Camille,Assistante de direction,Administration,CDI,35,Lun-Ven 9h00-17h00,Direction,06 78 90 12 34,c.moreau@nexussupply.fr,2020-02-17
-EMP-008,Bernard,Luc,Technicien SAV,SAV,CDI,39,Lun-Ven 8h00-17h00 (astreinte sem. paire),Thomas Berger,06 89 01 23 45,l.bernard@nexussupply.fr,2021-09-14
-EMP-009,Leroy,Emma,Commerciale (mi-temps),Commercial,CDI,17,Lun-Mer 9h00-17h30,Sophie Martin,06 90 12 34 56,e.leroy@nexussupply.fr,2023-10-02
-EMP-010,Garcia,Pablo,Développeur web,IT,CDD,35,Lun-Ven 10h00-18h00,Direction,06 01 23 45 67,p.garcia@nexussupply.fr,2025-11-01
-EMP-011,Fontaine,Marie,Comptable,Finance,CDI,35,Lun-Ven 9h00-17h00,Direction,06 11 22 33 44,m.fontaine@nexussupply.fr,2019-07-08
-EMP-012,Laurent,Kevin,Magasinier,Logistique,CDI,35,Mar-Sam 6h00-14h00,Antoine Petit,06 22 33 44 55,k.laurent@nexussupply.fr,2022-05-16
+id,last_name,first_name,position,department,contract_type,hours_per_week,schedule,manager,phone,email,hire_date
+EMP-001,Martin,Sophie,Sales Manager,Sales,permanent,39,Mon-Fri 9am-6pm,CEO,+33 6 12 34 56 78,s.martin@nexussupply.com,2019-03-15
+EMP-002,Berger,Thomas,Procurement Manager,Procurement,permanent,39,Mon-Fri 8am-5pm,CEO,+33 6 23 45 67 89,t.berger@nexussupply.com,2018-09-01
+EMP-003,Dupont,Julie,Senior Sales Executive,Sales,permanent,35,Mon-Fri 9am-5:30pm,Sophie Martin,+33 6 34 56 78 90,j.dupont@nexussupply.com,2021-06-07
+EMP-004,Rousseau,Marc,Sales Executive,Sales,permanent,35,Tue-Sat 9am-5:30pm,Sophie Martin,+33 6 45 67 89 01,m.rousseau@nexussupply.com,2022-01-10
+EMP-005,Chen,Lisa,Buyer,Procurement,permanent,35,Mon-Fri 8:30am-4:30pm,Thomas Berger,+33 6 56 78 90 12,l.chen@nexussupply.com,2023-04-03
+EMP-006,Petit,Antoine,Warehouse Manager,Logistics,permanent,39,Mon-Fri 7am-3pm,CEO,+33 6 67 89 01 23,a.petit@nexussupply.com,2017-11-20
+EMP-007,Moreau,Camille,Executive Assistant,Administration,permanent,35,Mon-Fri 9am-5pm,CEO,+33 6 78 90 12 34,c.moreau@nexussupply.com,2020-02-17
+EMP-008,Bernard,Luc,Customer Service Technician,Customer Service,permanent,39,Mon-Fri 8am-5pm (on-call even weeks),Thomas Berger,+33 6 89 01 23 45,l.bernard@nexussupply.com,2021-09-14
+EMP-009,Leroy,Emma,Sales Executive (part-time),Sales,permanent,17,Mon-Wed 9am-5:30pm,Sophie Martin,+33 6 90 12 34 56,e.leroy@nexussupply.com,2023-10-02
+EMP-010,Garcia,Pablo,Web Developer,IT,fixed-term,35,Mon-Fri 10am-6pm,CEO,+33 6 01 23 45 67,p.garcia@nexussupply.com,2025-11-01
+EMP-011,Fontaine,Marie,Accountant,Finance,permanent,35,Mon-Fri 9am-5pm,CEO,+33 6 11 22 33 44,m.fontaine@nexussupply.com,2019-07-08
+EMP-012,Laurent,Kevin,Warehouse Operative,Logistics,permanent,35,Tue-Sat 6am-2pm,Antoine Petit,+33 6 22 33 44 55,k.laurent@nexussupply.com,2022-05-16
