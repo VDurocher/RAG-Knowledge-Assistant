@@ -60,6 +60,9 @@ st.markdown("""
     white-space: nowrap;
 }
 .source-chip .page { color: #4a6a8a; margin-left: 2px; }
+.conf-high { color: #4ade80; font-size: 10px; margin-left: 4px; }
+.conf-medium { color: #fbbf24; font-size: 10px; margin-left: 4px; }
+.conf-low { color: #f87171; font-size: 10px; margin-left: 4px; }
 
 /* Ligne séparatrice légère sous les chips */
 .sources-label { font-size: 11px; color: #4a6a8a; margin-bottom: 4px; letter-spacing: 0.5px; }
@@ -81,12 +84,23 @@ st.markdown("""
 # ─── Cache pipeline ───────────────────────────────────────────────────────────
 
 @st.cache_resource(show_spinner="Loading knowledge base…")
-def initialize_rag_pipeline(retrieval_k: int, force_rebuild: bool = False):
+def initialize_rag_pipeline(
+    retrieval_k: int,
+    hybrid_search: bool,
+    force_rebuild: bool = False,
+):
     documents = load_documents(settings.knowledge_base_path)
     vector_store = load_or_build_index(documents, settings, force_rebuild=force_rebuild)
-    retriever = build_retriever(vector_store, k=retrieval_k)
+    retriever = build_retriever(
+        vector_store,
+        k=retrieval_k,
+        documents=documents,
+        hybrid=hybrid_search,
+        bm25_weight=settings.bm25_weight,
+        settings=settings,
+    )
     llm = build_llm(settings)
-    return retriever, llm
+    return retriever, vector_store, llm
 
 
 # ─── Sidebar ─────────────────────────────────────────────────────────────────
@@ -117,6 +131,20 @@ with st.sidebar:
 
     retrieval_k = st.slider("Results per query", 1, 10, settings.retrieval_k)
 
+    score_threshold = st.slider(
+        "Confidence threshold",
+        0.0, 1.0,
+        settings.retrieval_score_threshold,
+        step=0.05,
+        help="Documents below this score are filtered out. 0 = disabled.",
+    )
+
+    hybrid_search = st.toggle(
+        "Hybrid search (BM25 + semantic)",
+        value=settings.hybrid_search,
+        help="Combines keyword and semantic search. Better for product codes and proper nouns.",
+    )
+
     fallback_enabled = st.toggle(
         "LLM fallback",
         value=True,
@@ -135,9 +163,17 @@ with st.sidebar:
     st.divider()
     st.subheader("📚 Knowledge Base")
 
+    # Liste des fichiers avec bouton de suppression
     for filename in source_files:
         icon = "📄" if filename.endswith(".pdf") else "📊" if filename.endswith(".csv") else "📝"
-        st.caption(f"{icon} {filename}")
+        col1, col2 = st.columns([5, 1])
+        with col1:
+            st.caption(f"{icon} {filename}")
+        with col2:
+            if st.button("×", key=f"del_{filename}", help=f"Delete {filename}"):
+                (settings.knowledge_base_path / filename).unlink(missing_ok=True)
+                st.cache_resource.clear()
+                st.rerun()
 
     if not source_files:
         st.info("Add PDF or TXT files to `knowledge_base/`.")
@@ -146,8 +182,8 @@ with st.sidebar:
     st.subheader("📤 Add Documents")
 
     uploaded_files = st.file_uploader(
-        "PDF, TXT, MD or CSV",
-        type=["pdf", "txt", "md", "csv"],
+        "PDF, TXT, MD, CSV, DOCX or JSON",
+        type=["pdf", "txt", "md", "csv", "docx", "json"],
         accept_multiple_files=True,
         label_visibility="collapsed",
     )
@@ -172,6 +208,24 @@ with st.sidebar:
         st.session_state.messages = []
         st.rerun()
 
+    # Export de la conversation en Markdown
+    if st.session_state.get("messages"):
+        lines: list[str] = ["# Knowledge Assistant — Conversation Export\n"]
+        for msg in st.session_state.messages:
+            role = "**You**" if msg["role"] == "user" else "**Assistant**"
+            lines.append(f"{role}\n\n{msg['content']}\n")
+            if msg.get("citations"):
+                sources = ", ".join(c["source"] for c in msg["citations"])
+                lines.append(f"*Sources: {sources}*\n")
+            lines.append("---\n")
+        st.download_button(
+            "📥 Export Conversation",
+            "\n".join(lines),
+            file_name="conversation.md",
+            mime="text/markdown",
+            use_container_width=True,
+        )
+
 
 # ─── Main ─────────────────────────────────────────────────────────────────────
 
@@ -191,7 +245,7 @@ if not source_files:
     st.stop()
 
 try:
-    retriever, llm = initialize_rag_pipeline(retrieval_k)
+    retriever, vector_store, llm = initialize_rag_pipeline(retrieval_k, hybrid_search)
 except Exception as error:
     st.error(f"**Pipeline error:** {error}")
     st.stop()
@@ -203,20 +257,32 @@ if "messages" not in st.session_state:
 
 
 def render_sources(citations: list[dict]) -> None:
-    """Affiche les sources sous forme de chips compactes + excerpts optionnels."""
+    """Affiche les sources sous forme de chips avec badge de confiance + excerpts."""
     if not citations:
         return
 
     chips_html = '<div class="sources-label">SOURCES</div><div class="sources-row">'
     for c in citations:
         page_part = f'<span class="page">· p.{c["page"]}</span>' if c.get("page") else ""
-        chips_html += f'<span class="source-chip">📄 {c["source"]}{page_part}</span>'
+
+        # Badge de confiance si disponible
+        conf = c.get("confidence")
+        conf_html = ""
+        if conf is not None:
+            label = c.get("confidence_label", "")
+            conf_html = f'<span class="conf-{label}" title="{conf:.0%}">●</span>'
+
+        chips_html += (
+            f'<span class="source-chip">📄 {c["source"]}{page_part}{conf_html}</span>'
+        )
     chips_html += "</div>"
     st.markdown(chips_html, unsafe_allow_html=True)
 
     with st.expander("View excerpts", expanded=False):
         for c in citations:
             label = f"**{c['source']}**" + (f" — page {c['page']}" if c.get("page") else "")
+            if c.get("confidence") is not None:
+                label += f" — confidence {c['confidence']:.0%}"
             st.markdown(label)
             st.caption(c["excerpt"])
 
@@ -240,6 +306,14 @@ if prompt := st.chat_input("Ask a question about your documents…"):
         st.markdown(prompt)
     st.session_state.messages.append({"role": "user", "content": prompt})
 
+    # Construction de l'historique multi-tour (3 derniers échanges)
+    chat_history: list[tuple[str, str]] = []
+    msgs = st.session_state.messages[:-1]  # Exclure la question courante
+    for i in range(0, len(msgs) - 1, 2):
+        if msgs[i]["role"] == "user" and msgs[i + 1]["role"] == "assistant":
+            chat_history.append((msgs[i]["content"], msgs[i + 1]["content"]))
+    chat_history = chat_history[-3:]
+
     with st.chat_message("assistant"):
         is_fallback = False
         source_docs = []
@@ -247,7 +321,14 @@ if prompt := st.chat_input("Ask a question about your documents…"):
 
         try:
             stream, source_docs, is_fallback = ask_stream(
-                prompt, retriever, llm, fallback_to_llm=fallback_enabled
+                prompt,
+                retriever,
+                llm,
+                fallback_to_llm=fallback_enabled,
+                score_threshold=score_threshold if not hybrid_search else 0.0,
+                chat_history=chat_history or None,
+                vector_store=vector_store if not hybrid_search else None,
+                k=retrieval_k,
             )
 
             if is_fallback:
@@ -276,6 +357,8 @@ if prompt := st.chat_input("Ask a question about your documents…"):
                     "source": doc.metadata.get("source", "Unknown"),
                     "page": page + 1 if page is not None else None,
                     "excerpt": excerpt + ("…" if len(doc.page_content) > 180 else ""),
+                    "confidence": doc.metadata.get("_confidence"),
+                    "confidence_label": doc.metadata.get("_confidence_label"),
                 })
             render_sources(citations)
 
