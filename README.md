@@ -12,6 +12,12 @@ under 10 minutes with zero infrastructure.
 
 ---
 
+## Demo
+
+[![Watch the demo](https://cdn.loom.com/sessions/thumbnails/fbe9e758e2d84c6993c3c22855a16d6c-with-play.gif)](https://www.loom.com/share/fbe9e758e2d84c6993c3c22855a16d6c)
+
+---
+
 ## How This Saves 10 Hours Per Week
 
 Every SME has the same problem: knowledge trapped in PDFs, policy documents, and

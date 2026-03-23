@@ -1,13 +1,13 @@
 id,last_name,first_name,position,department,contract_type,hours_per_week,schedule,manager,phone,email,hire_date
-EMP-001,Martin,Sophie,Sales Manager,Sales,permanent,39,Mon-Fri 9am-6pm,CEO,+33 6 12 34 56 78,s.martin@nexussupply.com,2019-03-15
-EMP-002,Berger,Thomas,Procurement Manager,Procurement,permanent,39,Mon-Fri 8am-5pm,CEO,+33 6 23 45 67 89,t.berger@nexussupply.com,2018-09-01
-EMP-003,Dupont,Julie,Senior Sales Executive,Sales,permanent,35,Mon-Fri 9am-5:30pm,Sophie Martin,+33 6 34 56 78 90,j.dupont@nexussupply.com,2021-06-07
-EMP-004,Rousseau,Marc,Sales Executive,Sales,permanent,35,Tue-Sat 9am-5:30pm,Sophie Martin,+33 6 45 67 89 01,m.rousseau@nexussupply.com,2022-01-10
-EMP-005,Chen,Lisa,Buyer,Procurement,permanent,35,Mon-Fri 8:30am-4:30pm,Thomas Berger,+33 6 56 78 90 12,l.chen@nexussupply.com,2023-04-03
-EMP-006,Petit,Antoine,Warehouse Manager,Logistics,permanent,39,Mon-Fri 7am-3pm,CEO,+33 6 67 89 01 23,a.petit@nexussupply.com,2017-11-20
-EMP-007,Moreau,Camille,Executive Assistant,Administration,permanent,35,Mon-Fri 9am-5pm,CEO,+33 6 78 90 12 34,c.moreau@nexussupply.com,2020-02-17
-EMP-008,Bernard,Luc,Customer Service Technician,Customer Service,permanent,39,Mon-Fri 8am-5pm (on-call even weeks),Thomas Berger,+33 6 89 01 23 45,l.bernard@nexussupply.com,2021-09-14
-EMP-009,Leroy,Emma,Sales Executive (part-time),Sales,permanent,17,Mon-Wed 9am-5:30pm,Sophie Martin,+33 6 90 12 34 56,e.leroy@nexussupply.com,2023-10-02
-EMP-010,Garcia,Pablo,Web Developer,IT,fixed-term,35,Mon-Fri 10am-6pm,CEO,+33 6 01 23 45 67,p.garcia@nexussupply.com,2025-11-01
-EMP-011,Fontaine,Marie,Accountant,Finance,permanent,35,Mon-Fri 9am-5pm,CEO,+33 6 11 22 33 44,m.fontaine@nexussupply.com,2019-07-08
-EMP-012,Laurent,Kevin,Warehouse Operative,Logistics,permanent,35,Tue-Sat 6am-2pm,Antoine Petit,+33 6 22 33 44 55,k.laurent@nexussupply.com,2022-05-16
+EMP-001,Smith,Sarah,Sales Manager,Sales,permanent,39,Mon-Fri 9am-6pm,CEO,+1 206 555 0101,s.smith@nexussupply.com,2019-03-15
+EMP-002,Johnson,Thomas,Procurement Manager,Procurement,permanent,39,Mon-Fri 8am-5pm,CEO,+1 206 555 0102,t.johnson@nexussupply.com,2018-09-01
+EMP-003,Williams,Julie,Senior Sales Executive,Sales,permanent,35,Mon-Fri 9am-5:30pm,Sarah Smith,+1 206 555 0103,j.williams@nexussupply.com,2021-06-07
+EMP-004,Brown,Marcus,Sales Executive,Sales,permanent,35,Tue-Sat 9am-5:30pm,Sarah Smith,+1 206 555 0104,m.brown@nexussupply.com,2022-01-10
+EMP-005,Chen,Lisa,Buyer,Procurement,permanent,35,Mon-Fri 8:30am-4:30pm,Thomas Johnson,+1 206 555 0105,l.chen@nexussupply.com,2023-04-03
+EMP-006,Miller,Anthony,Warehouse Manager,Logistics,permanent,39,Mon-Fri 7am-3pm,CEO,+1 206 555 0106,a.miller@nexussupply.com,2017-11-20
+EMP-007,Davis,Camille,Executive Assistant,Administration,permanent,35,Mon-Fri 9am-5pm,CEO,+1 206 555 0107,c.davis@nexussupply.com,2020-02-17
+EMP-008,Wilson,Luke,Customer Service Technician,Customer Service,permanent,39,Mon-Fri 8am-5pm (on-call even weeks),Thomas Johnson,+1 206 555 0108,l.wilson@nexussupply.com,2021-09-14
+EMP-009,Taylor,Emma,Sales Executive (part-time),Sales,permanent,17,Mon-Wed 9am-5:30pm,Sarah Smith,+1 206 555 0109,e.taylor@nexussupply.com,2023-10-02
+EMP-010,Garcia,Pablo,Web Developer,IT,fixed-term,35,Mon-Fri 10am-6pm,CEO,+1 206 555 0110,p.garcia@nexussupply.com,2025-11-01
+EMP-011,Anderson,Marie,Accountant,Finance,permanent,35,Mon-Fri 9am-5pm,CEO,+1 206 555 0111,m.anderson@nexussupply.com,2019-07-08
+EMP-012,Thompson,Kevin,Warehouse Operative,Logistics,permanent,35,Tue-Sat 6am-2pm,Anthony Miller,+1 206 555 0112,k.thompson@nexussupply.com,2022-05-16

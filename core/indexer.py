@@ -32,10 +32,14 @@ def _get_embeddings(settings: Settings):
 
 
 def _compute_manifest(documents: list[Document]) -> str:
-    """Calcule un hash représentant l'état actuel des documents."""
-    sources = sorted({doc.metadata.get("source", "") for doc in documents})
-    content_hash = hashlib.md5(str(sources).encode()).hexdigest()
-    return content_hash
+    """Calcule un hash représentant l'état actuel des documents (sources + contenu)."""
+    # Trier par source pour un hash déterministe
+    sorted_docs = sorted(documents, key=lambda d: d.metadata.get("source", ""))
+    fingerprint = "".join(
+        f"{d.metadata.get('source', '')}:{d.page_content}"
+        for d in sorted_docs
+    )
+    return hashlib.md5(fingerprint.encode()).hexdigest()
 
 
 def _load_manifest(vector_store_path: Path) -> str | None:
