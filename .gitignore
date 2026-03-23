@@ -1,0 +1,31 @@
+# Variables d'environnement — ne jamais committer
+.env
+
+# Index vectoriel — régénéré automatiquement
+vector_store/
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+venv/
+env/
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Tests
+.pytest_cache/
+.coverage
+htmlcov/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
