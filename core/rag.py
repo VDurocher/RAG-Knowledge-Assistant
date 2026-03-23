@@ -100,6 +100,8 @@ def build_llm(settings: Settings) -> BaseChatModel:
         model=settings.openai_chat_model,
         api_key=settings.openai_api_key,
         temperature=0.1,  # Faible créativité pour maximiser la précision factuelle
+        timeout=60,
+        max_retries=2,
     )
 
 

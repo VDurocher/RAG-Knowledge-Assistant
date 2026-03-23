@@ -1,6 +1,5 @@
 """Tests unitaires pour le chargement des documents."""
 
-import tempfile
 from pathlib import Path
 
 import pytest
@@ -20,7 +19,7 @@ def temp_knowledge_base(tmp_path: Path) -> Path:
     (kb / "guide.txt").write_text(
         "Onboarding guide: Welcome to the team. Please complete your setup.", encoding="utf-8"
     )
-    (kb / "ignored.csv").write_text("col1,col2\nval1,val2", encoding="utf-8")
+    (kb / "ignored.docx").write_bytes(b"PK\x03\x04")  # Format non supporté
 
     return kb
 
@@ -37,7 +36,7 @@ class TestLoadDocuments:
         docs = load_documents(temp_knowledge_base)
         sources = {doc.metadata["source"] for doc in docs}
 
-        assert "ignored.csv" not in sources
+        assert "ignored.docx" not in sources
 
     def test_source_metadata_is_filename_only(self, temp_knowledge_base: Path) -> None:
         docs = load_documents(temp_knowledge_base)
@@ -64,7 +63,7 @@ class TestListSourceFiles:
 
     def test_excludes_unsupported_files(self, temp_knowledge_base: Path) -> None:
         files = list_source_files(temp_knowledge_base)
-        assert "ignored.csv" not in files
+        assert "ignored.docx" not in files
 
     def test_returns_empty_for_missing_folder(self, tmp_path: Path) -> None:
         files = list_source_files(tmp_path / "nonexistent")

@@ -39,7 +39,7 @@ def _compute_manifest(documents: list[Document]) -> str:
         f"{d.metadata.get('source', '')}:{d.page_content}"
         for d in sorted_docs
     )
-    return hashlib.md5(fingerprint.encode()).hexdigest()
+    return hashlib.sha256(fingerprint.encode()).hexdigest()
 
 
 def _load_manifest(vector_store_path: Path) -> str | None:

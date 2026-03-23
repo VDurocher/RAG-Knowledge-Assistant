@@ -81,10 +81,10 @@ st.markdown("""
 # ─── Cache pipeline ───────────────────────────────────────────────────────────
 
 @st.cache_resource(show_spinner="Loading knowledge base…")
-def initialize_rag_pipeline(force_rebuild: bool = False):
+def initialize_rag_pipeline(retrieval_k: int, force_rebuild: bool = False):
     documents = load_documents(settings.knowledge_base_path)
     vector_store = load_or_build_index(documents, settings, force_rebuild=force_rebuild)
-    retriever = build_retriever(vector_store, k=settings.retrieval_k)
+    retriever = build_retriever(vector_store, k=retrieval_k)
     llm = build_llm(settings)
     return retriever, llm
 
@@ -136,13 +136,11 @@ with st.sidebar:
     st.subheader("📚 Knowledge Base")
 
     for filename in source_files:
-        icon = "📄" if filename.endswith(".pdf") else "📝"
+        icon = "📄" if filename.endswith(".pdf") else "📊" if filename.endswith(".csv") else "📝"
         st.caption(f"{icon} {filename}")
 
     if not source_files:
         st.info("Add PDF or TXT files to `knowledge_base/`.")
-
-    st.divider()
 
     st.divider()
     st.subheader("📤 Add Documents")
@@ -193,7 +191,7 @@ if not source_files:
     st.stop()
 
 try:
-    retriever, llm = initialize_rag_pipeline()
+    retriever, llm = initialize_rag_pipeline(retrieval_k)
 except Exception as error:
     st.error(f"**Pipeline error:** {error}")
     st.stop()
@@ -245,6 +243,7 @@ if prompt := st.chat_input("Ask a question about your documents…"):
     with st.chat_message("assistant"):
         is_fallback = False
         source_docs = []
+        full_response: str = ""
 
         try:
             stream, source_docs, is_fallback = ask_stream(
