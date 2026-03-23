@@ -1,21 +1,38 @@
-"""Chargement des documents PDF et TXT depuis le dossier knowledge_base."""
+"""Chargement des documents PDF, TXT et CSV depuis le dossier knowledge_base."""
 
 from pathlib import Path
 
-from langchain_community.document_loaders import PyPDFLoader, TextLoader
+from langchain_community.document_loaders import CSVLoader, PyPDFLoader, TextLoader
 from langchain_core.documents import Document
 
-# Extensions supportées et leur loader associé
-_SUPPORTED_EXTENSIONS: dict[str, type] = {
+# Extensions supportées — le CSV est traité à part (logique différente)
+_TEXT_EXTENSIONS: dict[str, type] = {
     ".pdf": PyPDFLoader,
     ".txt": TextLoader,
     ".md": TextLoader,
 }
+_SUPPORTED_EXTENSIONS = {**_TEXT_EXTENSIONS, ".csv": CSVLoader}
+
+
+def _load_csv(file_path: Path) -> list[Document]:
+    """
+    Charge un CSV : chaque ligne devient un Document avec toutes ses colonnes.
+    Le contenu est formaté lisiblement pour le retrieval.
+    """
+    loader = CSVLoader(
+        str(file_path),
+        encoding="utf-8",
+        csv_args={"delimiter": ","},
+    )
+    docs = loader.load()
+    for doc in docs:
+        doc.metadata["source"] = file_path.name
+    return docs
 
 
 def load_documents(knowledge_base_path: Path) -> list[Document]:
     """
-    Charge tous les fichiers PDF/TXT/MD du dossier spécifié.
+    Charge tous les fichiers PDF/TXT/MD/CSV du dossier spécifié.
 
     Chaque document reçoit un metadata['source'] avec le nom du fichier
     pour permettre les citations dans les réponses.
@@ -29,7 +46,7 @@ def load_documents(knowledge_base_path: Path) -> list[Document]:
     if not knowledge_base_path.exists():
         raise FileNotFoundError(
             f"Dossier introuvable: '{knowledge_base_path}'. "
-            "Créez-le et ajoutez vos fichiers PDF/TXT."
+            "Créez-le et ajoutez vos fichiers PDF/TXT/CSV."
         )
 
     documents: list[Document] = []
@@ -38,26 +55,26 @@ def load_documents(knowledge_base_path: Path) -> list[Document]:
         if not file_path.is_file():
             continue
 
-        loader_class = _SUPPORTED_EXTENSIONS.get(file_path.suffix.lower())
-        if loader_class is None:
-            continue
+        suffix = file_path.suffix.lower()
 
         try:
-            if loader_class is TextLoader:
-                loader = loader_class(str(file_path), encoding="utf-8")
+            if suffix == ".csv":
+                docs = _load_csv(file_path)
+            elif suffix in _TEXT_EXTENSIONS:
+                loader_class = _TEXT_EXTENSIONS[suffix]
+                if loader_class is TextLoader:
+                    loader = loader_class(str(file_path), encoding="utf-8")
+                else:
+                    loader = loader_class(str(file_path))
+                docs = loader.load()
+                for doc in docs:
+                    doc.metadata["source"] = file_path.name
             else:
-                loader = loader_class(str(file_path))
-
-            docs = loader.load()
-
-            # Normaliser la source pour les citations : nom de fichier uniquement
-            for doc in docs:
-                doc.metadata["source"] = file_path.name
+                continue
 
             documents.extend(docs)
 
         except Exception as error:
-            # Loguer l'erreur sans interrompre le chargement des autres fichiers
             print(f"[loader] Impossible de charger '{file_path.name}': {error}")
 
     return documents

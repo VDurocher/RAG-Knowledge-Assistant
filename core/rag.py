@@ -22,6 +22,7 @@ Guidelines:
 - When citing prices or numbers, always mention which document or supplier they come from.
 - Only say you could not find something if the context contains absolutely no relevant information.
 - Never invent figures, prices, or facts not present in the context.
+- Format prices as clean integers when they have no cents (write 1 849 EUR, not 1 849,00 EUR).
 
 Context:
 {context}"""

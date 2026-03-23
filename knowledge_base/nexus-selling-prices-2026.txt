@@ -1,0 +1,63 @@
+NEXUS SUPPLY CO. — TARIF DE VENTE CLIENT 2026
+==============================================
+Ces prix sont les prix HT facturés à nos clients.
+Les prix d'achat fournisseur sont dans les catalogues AlphaPro, BetaSupply et GammaDist.
+Marge brute moyenne appliquée : 28% sur meilleur prix fournisseur.
+Validité : 01/01/2026 au 31/12/2026
+
+ORDINATEURS PORTABLES
+----------------------
+Dell XPS 15 (i7-13700H, 32 Go, 1 To, OLED)       | Prix vente : 2 290 EUR | Achat meilleur prix : 1 779 EUR (BetaSupply) | Marge : 511 EUR (29%)
+Dell XPS 15 (i5-13500H, 16 Go, 512 Go)            | Prix vente : 1 490 EUR | Achat meilleur prix : 1 189 EUR (BetaSupply) | Marge : 301 EUR (25%)
+MacBook Pro 14" M3 (16 Go, 512 Go)                | Prix vente : 2 490 EUR | Achat meilleur prix : 1 949 EUR (GammaDist) | Marge : 541 EUR (28%)
+Lenovo ThinkPad X1 Carbon Gen 12 (i7, 32 Go)      | Prix vente : 1 990 EUR | Achat meilleur prix : 1 589 EUR (GammaDist) | Marge : 401 EUR (25%)
+HP EliteBook 840 G11 (i5, 16 Go, 512 Go)          | Prix vente : 1 490 EUR | Achat meilleur prix : 1 189 EUR (AlphaPro) | Marge : 301 EUR (25%)
+
+MONITEURS
+----------
+LG UltraWide 27" 4K (27UP85R)                     | Prix vente :   489 EUR | Achat meilleur prix :   375 EUR (GammaDist) | Marge : 114 EUR (30%)
+Samsung 32" QHD (S32BG700)                        | Prix vente :   579 EUR | Achat meilleur prix :   449 EUR (AlphaPro)  | Marge : 130 EUR (29%)
+Dell UltraSharp 24" FHD (U2422H)                  | Prix vente :   349 EUR | Achat meilleur prix :   268 EUR (GammaDist) | Marge :  81 EUR (30%)
+BenQ 27" QHD Designer (PD2705Q)                   | Prix vente :   549 EUR | Achat meilleur prix :   419 EUR (AlphaPro)  | Marge : 130 EUR (31%)
+
+SOURIS
+------
+Logitech MX Master 3S                             | Prix vente :   109 EUR | Achat meilleur prix :    82 EUR (BetaSupply) | Marge :  27 EUR (33%)
+Apple Magic Mouse (rechargeable)                  | Prix vente :    99 EUR | Achat meilleur prix :    76 EUR (GammaDist)  | Marge :  23 EUR (30%)
+Logitech Lift Vertical Ergonomic                  | Prix vente :    72 EUR | Achat meilleur prix :    55 EUR (GammaDist)  | Marge :  17 EUR (31%)
+Microsoft Bluetooth Ergonomic                     | Prix vente :    63 EUR | Achat meilleur prix :    49 EUR (GammaDist)  | Marge :  14 EUR (29%)
+
+CLAVIERS
+---------
+Logitech MX Keys Advanced                         | Prix vente :   155 EUR | Achat meilleur prix :   119 EUR (BetaSupply) | Marge :  36 EUR (30%)
+Keychron K8 Pro (mécanique, sans fil)             | Prix vente :   139 EUR | Achat meilleur prix :   109 EUR (GammaDist)  | Marge :  30 EUR (28%)
+Apple Magic Keyboard Touch ID                     | Prix vente :   129 EUR | Achat meilleur prix :    99 EUR (GammaDist)  | Marge :  30 EUR (30%)
+Microsoft Sculpt Ergonomic (ensemble)             | Prix vente :    89 EUR | Achat meilleur prix :    69 EUR (AlphaPro)   | Marge :  20 EUR (29%)
+
+AUDIO & VIDÉO
+--------------
+Jabra Evolve2 85 (ANC, sans fil)                  | Prix vente :   519 EUR | Achat meilleur prix :   399 EUR (BetaSupply) | Marge : 120 EUR (30%)
+Logitech C920 HD Pro Webcam                       | Prix vente :    99 EUR | Achat meilleur prix :    79 EUR (BetaSupply) | Marge :  20 EUR (25%)
+Sony WH-1000XM5 (ANC professionnel)               | Prix vente :   429 EUR | Achat meilleur prix :   329 EUR (BetaSupply) | Marge : 100 EUR (30%)
+Blue Yeti USB Microphone                          | Prix vente :   165 EUR | Achat meilleur prix :   129 EUR (AlphaPro)   | Marge :  36 EUR (28%)
+
+STOCKAGE & CONNECTIVITÉ
+------------------------
+Samsung T7 SSD Externe 1 To                       | Prix vente :   169 EUR | Achat meilleur prix :   132 EUR (GammaDist) | Marge :  37 EUR (28%)
+Samsung T7 SSD Externe 2 To                       | Prix vente :   269 EUR | Achat meilleur prix :   209 EUR (GammaDist) | Marge :  60 EUR (29%)
+Anker USB-C Hub 7-en-1                            | Prix vente :    55 EUR | Achat meilleur prix :    42 EUR (BetaSupply) | Marge :  13 EUR (31%)
+CalDigit TS4 Thunderbolt 4 Dock                   | Prix vente :   459 EUR | Achat meilleur prix :   359 EUR (GammaDist) | Marge : 100 EUR (28%)
+
+ALIMENTATION & MOBILIER
+------------------------
+APC Back-UPS Pro 1500VA                           | Prix vente :   309 EUR | Achat meilleur prix :   239 EUR (BetaSupply) | Marge :  70 EUR (29%)
+Chaise Ergopro X3                                 | Prix vente :   365 EUR | Achat meilleur prix :   279 EUR (BetaSupply) | Marge :  86 EUR (31%)
+Chaise Ergopro X5 Pro                             | Prix vente :   545 EUR | Achat meilleur prix :   419 EUR (BetaSupply) | Marge : 126 EUR (30%)
+Bureau assis-debout électrique 140x70             | Prix vente :   899 EUR | Achat meilleur prix :   699 EUR (AlphaPro)   | Marge : 200 EUR (29%)
+Lampe bureau Philips Hue Go                       | Prix vente :    69 EUR | Achat meilleur prix :    54 EUR (GammaDist)  | Marge :  15 EUR (28%)
+
+IMPRESSION
+----------
+HP LaserJet Pro M404dn                            | Prix vente :   419 EUR | Achat meilleur prix :   319 EUR (GammaDist) | Marge : 100 EUR (31%)
+Cartouche toner HP CF259A (3 000 pages)           | Prix vente :    29 EUR | Achat meilleur prix :    22 EUR (BetaSupply) | Marge :   7 EUR (32%)
+Rame papier A4 80g/m² (5 x 500 feuilles)         | Prix vente :    28 EUR | Achat meilleur prix :  21,50 EUR (BetaSupply) | Marge :  6,50 EUR (30%)

@@ -144,6 +144,28 @@ with st.sidebar:
 
     st.divider()
 
+    st.divider()
+    st.subheader("📤 Add Documents")
+
+    uploaded_files = st.file_uploader(
+        "PDF, TXT, MD or CSV",
+        type=["pdf", "txt", "md", "csv"],
+        accept_multiple_files=True,
+        label_visibility="collapsed",
+    )
+
+    if uploaded_files:
+        saved = []
+        for uploaded_file in uploaded_files:
+            dest = settings.knowledge_base_path / uploaded_file.name
+            dest.write_bytes(uploaded_file.read())
+            saved.append(uploaded_file.name)
+        st.success(f"Added: {', '.join(saved)}")
+        st.cache_resource.clear()
+        st.rerun()
+
+    st.divider()
+
     if st.button("🔄 Rebuild Index", use_container_width=True, type="secondary"):
         st.cache_resource.clear()
         st.rerun()
