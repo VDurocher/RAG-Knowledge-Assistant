@@ -36,18 +36,33 @@ procedure guides that employees have to manually hunt through.
 
 ## Features
 
-- **Drop-in document loading** — add PDFs or TXT files to `knowledge_base/`, restart, done
+- **Multi-format document loading** — PDF, TXT, MD, CSV, DOCX, and JSON files supported
 - **Smart chunking** — `RecursiveCharacterTextSplitter` with configurable size and overlap
-- **Dual embedder** — OpenAI `text-embedding-3-small` (accuracy) or HuggingFace `all-MiniLM-L6-v2` (free, offline)
-- **Persistent FAISS index** — built once, reloaded instantly on subsequent starts
-- **Intelligent cache invalidation** — auto-detects new/removed files and rebuilds
-- **Cited answers** — every response shows the source filename and PDF page number
-- **Streaming responses** — token-by-token output, no waiting for long answers
-- **Enterprise UI** — clean Streamlit interface with sidebar controls and branding placeholder
+- **Dual embedder** — OpenAI `text-embedding-3-small` (accuracy) or HuggingFace `sentence-transformers/all-MiniLM-L6-v2` (free, offline)
+- **Incremental FAISS index** — new files are added to the existing index without a full rebuild; modifications or deletions trigger a full rebuild automatically
+- **Hybrid search** — optional BM25 + semantic retrieval via `EnsembleRetriever` (better for product codes and proper nouns)
+- **Confidence scoring** — every retrieved passage is scored and color-coded (high / medium / low); passages below the configured threshold are filtered out
+- **Cited answers** — every response shows source filename, PDF page number, and a text excerpt
+- **Streaming responses** — token-by-token output via SSE, no waiting for long answers
+- **LLM fallback** — when no relevant document is found, the AI answers from general knowledge with a clear warning banner
+- **Multi-turn conversation** — last 3 exchanges are included as context for follow-up questions
+- **In-app document management** — upload or delete files directly from the UI; the index reloads automatically
+- **Conversation export** — download the full chat history as a Markdown file
 
 ---
 
-## Quick Start
+## Two Deployment Modes
+
+The project ships with two independent interfaces that share the same `core/` pipeline:
+
+| Mode | When to use | How to start |
+|------|-------------|--------------|
+| **Streamlit** (standalone) | Quick demo, local use, single user | `streamlit run app/main.py` |
+| **FastAPI + Next.js** (full-stack) | Multi-user deployment, custom UI, API integration | `uvicorn backend.main:app` + `cd frontend && npm run dev` |
+
+---
+
+## Quick Start — Streamlit Mode
 
 ### 1. Clone and install
 
@@ -82,6 +97,8 @@ cp your_documents/*.pdf knowledge_base/
 cp your_policies/*.txt knowledge_base/
 ```
 
+Supported formats: PDF, TXT, MD, CSV, DOCX, JSON.
+
 ### 4. Launch
 
 ```bash
@@ -92,34 +109,83 @@ Open `http://localhost:8501` — the index builds automatically on first launch.
 
 ---
 
+## Quick Start — FastAPI + Next.js Mode
+
+### 1. Install Python dependencies
+
+```bash
+pip install -r requirements.txt
+pip install -r backend/requirements.txt
+```
+
+### 2. Start the API
+
+```bash
+uvicorn backend.main:app --reload
+```
+
+The API is available at `http://localhost:8000`. Interactive docs at `http://localhost:8000/docs`.
+
+### 3. Start the frontend
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+Open `http://localhost:3000`.
+
+---
+
 ## Architecture
 
 ```
 User Question
      │
      ▼
-┌─────────────────────┐
-│  Streamlit UI        │  ← Chat + Citations + Sidebar controls
-└────────┬────────────┘
-         │
-         ▼
-┌─────────────────────┐
-│  RAG Chain           │  ← Retrieve → Format context → Stream answer
-└──────┬──────────────┘
-       │                           │
-       ▼                           ▼
-┌─────────────┐          ┌──────────────────┐
-│ FAISS Index │          │  OpenAI LLM      │
-│ (on disk)   │          │  gpt-4o-mini     │
-└──────┬──────┘          └──────────────────┘
+┌────────────────────────┐     ┌─────────────────────────┐
+│  Streamlit UI           │  OR │  Next.js 16 Frontend     │
+│  app/main.py            │     │  frontend/               │
+└────────┬───────────────┘     └────────────┬────────────┘
+         │                                  │ HTTP SSE
+         │                                  ▼
+         │                     ┌─────────────────────────┐
+         │                     │  FastAPI Backend         │
+         │                     │  backend/main.py         │
+         │                     │  POST /api/chat          │
+         │                     │  GET  /api/documents     │
+         │                     │  POST /api/documents/upload │
+         │                     │  DELETE /api/documents/{f}  │
+         │                     │  POST /api/rebuild       │
+         │                     │  GET  /api/status        │
+         │                     └────────────┬────────────┘
+         │                                  │
+         └─────────────────┬────────────────┘
+                           ▼
+              ┌─────────────────────┐
+              │  core/ pipeline      │
+              │  config · loader     │
+              │  indexer · rag       │
+              └──────┬──────────────┘
+                     │
+          ┌──────────┴──────────┐
+          ▼                     ▼
+┌─────────────┐      ┌──────────────────┐
+│ FAISS Index │      │  LLM             │
+│ (on disk)   │      │  OpenAI / Ollama │
+└──────┬──────┘      └──────────────────┘
        │
        ▼
-┌─────────────────────────────────┐
-│  knowledge_base/                 │
-│  ├── contract.pdf  (PyPDFLoader) │
-│  ├── policy.txt    (TextLoader)  │
-│  └── guide.md      (TextLoader)  │
-└─────────────────────────────────┘
+┌──────────────────────────────────────────┐
+│  knowledge_base/                          │
+│  ├── contract.pdf    (PyPDFLoader)        │
+│  ├── policy.txt      (TextLoader)         │
+│  ├── guide.md        (TextLoader)         │
+│  ├── data.csv        (CSVLoader)          │
+│  ├── report.docx     (Docx2txtLoader)     │
+│  └── config.json     (TextLoader)         │
+└──────────────────────────────────────────┘
 ```
 
 Full architecture documentation: [`docs/architecture.md`](docs/architecture.md)
@@ -162,8 +228,11 @@ EMBEDDER_TYPE=local
 | `OLLAMA_MODEL` | `llama3.2` | Any model pulled via `ollama pull` |
 | `OLLAMA_BASE_URL` | `http://localhost:11434` | Ollama server URL |
 | `EMBEDDER_TYPE` | `local` | `local` (HuggingFace, free) or `openai` (text-embedding-3-small) |
-| `LOCAL_EMBED_MODEL` | `all-MiniLM-L6-v2` | Any sentence-transformers model |
+| `LOCAL_EMBED_MODEL` | `sentence-transformers/all-MiniLM-L6-v2` | Any sentence-transformers model |
 | `RETRIEVAL_K` | `4` | Passages retrieved per query. Increase for complex questions |
+| `RETRIEVAL_SCORE_THRESHOLD` | `0.3` | Minimum confidence score (0.0 = disabled). Passages below this are filtered out |
+| `HYBRID_SEARCH` | `false` | Enable BM25 + semantic hybrid retrieval. Requires `rank-bm25` |
+| `BM25_WEIGHT` | `0.4` | BM25 weight in hybrid mode (0.4 = 40% keyword, 60% semantic) |
 | `CHUNK_SIZE` | `1000` | Characters per chunk. Lower for precise retrieval, higher for context |
 | `CHUNK_OVERLAP` | `200` | Overlap between chunks to avoid cutting mid-sentence |
 
@@ -174,13 +243,21 @@ EMBEDDER_TYPE=local
 ```
 RAG-Knowledge-Assistant/
 ├── app/
-│   └── main.py              # Streamlit UI (chat, sidebar, citations)
+│   └── main.py              # Streamlit UI (chat, sidebar, citations, upload)
+├── backend/
+│   ├── main.py              # FastAPI app (lifespan, CORS)
+│   ├── deps.py              # Pipeline singleton (shared state across requests)
+│   ├── requirements.txt     # FastAPI-specific dependencies
+│   └── routes/
+│       ├── chat.py          # POST /api/chat — SSE streaming
+│       └── documents.py     # CRUD /api/documents + /api/rebuild + /api/status
 ├── core/
 │   ├── config.py            # Settings dataclass with .env loading
-│   ├── loader.py            # PDF/TXT document ingestion
-│   ├── indexer.py           # FAISS index construction and caching
-│   └── rag.py               # Retrieval chain, LLM, streaming, citations
-├── knowledge_base/          # ← Drop your documents here
+│   ├── loader.py            # PDF/TXT/CSV/DOCX/JSON/MD ingestion
+│   ├── indexer.py           # FAISS index construction, caching, incremental updates
+│   └── rag.py               # Retrieval chain, LLM, streaming, confidence scoring, citations
+├── frontend/                # Next.js 16 frontend (optional — for FastAPI mode)
+├── knowledge_base/          # Drop your documents here
 ├── vector_store/            # Auto-generated FAISS index (gitignored)
 ├── docs/
 │   └── architecture.md      # Detailed design documentation
@@ -218,7 +295,7 @@ tests/test_indexer.py::TestSplitDocuments::test_preserves_metadata PASSED
 | OpenAI embeddings + GPT-4o-mini | ~$8/month |
 | OpenAI embeddings + GPT-4o | ~$60/month |
 
-Re-embedding only occurs when new documents are added.
+Re-embedding only occurs when new documents are added or existing ones are modified.
 
 ---
 
@@ -257,9 +334,10 @@ Wrap the Streamlit app with `streamlit-authenticator` for user-level access cont
 ## Requirements
 
 - Python 3.11+
-- OpenAI API key (for answer generation)
+- OpenAI API key (for answer generation — not required in full-local mode)
 - ~500 MB disk space for local embedding model (downloaded on first run)
 - 4 GB RAM recommended for local embeddings
+- Node.js 20+ (only for the Next.js frontend)
 
 ---
 
