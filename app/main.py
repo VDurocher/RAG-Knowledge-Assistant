@@ -287,6 +287,24 @@ def render_sources(citations: list[dict]) -> None:
             st.caption(c["excerpt"])
 
 
+# Message d'accueil — affiché uniquement si l'historique est vide
+if not st.session_state.messages:
+    st.markdown("""
+    <div style="
+        text-align: center;
+        padding: 48px 24px;
+        color: #64748b;
+    ">
+        <div style="font-size: 48px; margin-bottom: 16px;">💬</div>
+        <p style="font-size: 16px; margin: 0 0 8px;">
+            Ask any question about your company documents.
+        </p>
+        <p style="font-size: 13px; color: #475569; margin: 0;">
+            Answers are cited from the indexed knowledge base.
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
+
 # Rendu de l'historique
 for msg in st.session_state.messages:
     with st.chat_message(msg["role"]):

@@ -1,9 +1,13 @@
 """Chargement des documents PDF, TXT, CSV, DOCX et JSON depuis knowledge_base."""
 
+import logging
 from pathlib import Path
 
 from langchain_community.document_loaders import CSVLoader, PyPDFLoader, TextLoader
 from langchain_core.documents import Document
+
+# Logger structuré — remplace les print() interdits en production
+_logger = logging.getLogger(__name__)
 
 # Extensions texte — même logique de chargement (TextLoader ou loader dédié)
 _TEXT_EXTENSIONS: dict[str, type] = {
@@ -87,7 +91,7 @@ def load_documents(knowledge_base_path: Path) -> list[Document]:
             documents.extend(docs)
 
         except Exception as error:
-            print(f"[loader] Impossible de charger '{file_path.name}': {error}")
+            _logger.warning("Impossible de charger '%s': %s", file_path.name, error)
 
     return documents
 
