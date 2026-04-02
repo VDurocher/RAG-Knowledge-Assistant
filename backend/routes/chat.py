@@ -5,11 +5,12 @@ import json
 import threading
 from typing import AsyncGenerator
 
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
 
 from backend.deps import get_state
+from backend.security import require_api_key
 from core.rag import ask_stream
 
 router = APIRouter()
@@ -100,7 +101,7 @@ async def _generate_sse(request: ChatRequest) -> AsyncGenerator[str, None]:
             break
 
 
-@router.post("/chat")
+@router.post("/chat", dependencies=[Depends(require_api_key)])
 async def chat(request: ChatRequest) -> StreamingResponse:
     """Répond en streaming SSE à une question sur la knowledge base."""
     return StreamingResponse(

@@ -144,6 +144,10 @@ def load_or_build_index(
 
     # Index déjà à jour
     if manifest["hash"] == current_hash:
+        # AVERTISSEMENT SÉCURITÉ : allow_dangerous_deserialization active la désérialisation
+        # pickle de FAISS, ce qui peut exécuter du code arbitraire si l'index est compromis.
+        # Risque accepté ici car l'index est généré et stocké localement par l'application
+        # elle-même — il ne provient jamais d'une source externe non fiable.
         return FAISS.load_local(
             str(settings.vector_store_path),
             embeddings,
@@ -163,6 +167,7 @@ def load_or_build_index(
 
     # Cas favorable : seulement des ajouts → indexation incrémentale
     if new_files and not removed_files and not modified_files:
+        # AVERTISSEMENT SÉCURITÉ : voir commentaire ci-dessus — même justification.
         vector_store = FAISS.load_local(
             str(settings.vector_store_path),
             embeddings,
