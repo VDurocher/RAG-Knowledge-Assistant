@@ -1,5 +1,7 @@
 """Point d'entrée Streamlit — interface chat entreprise avec citations."""
 
+import html
+import os
 import sys
 from pathlib import Path
 
@@ -188,15 +190,39 @@ with st.sidebar:
         label_visibility="collapsed",
     )
 
+    # Limite de taille maximale autorisée par fichier : 10 Mo
+    _MAX_UPLOAD_SIZE_BYTES = 10 * 1024 * 1024
+
     if uploaded_files:
         saved = []
+        errors = []
         for uploaded_file in uploaded_files:
-            dest = settings.knowledge_base_path / uploaded_file.name
-            dest.write_bytes(uploaded_file.read())
-            saved.append(uploaded_file.name)
-        st.success(f"Added: {', '.join(saved)}")
-        st.cache_resource.clear()
-        st.rerun()
+            file_bytes = uploaded_file.read()
+
+            # Vérification de la taille avant écriture
+            if len(file_bytes) > _MAX_UPLOAD_SIZE_BYTES:
+                errors.append(f"{uploaded_file.name} dépasse 10 Mo")
+                continue
+
+            # Nettoyage du nom de fichier pour éviter les path traversal
+            safe_name = os.path.basename(uploaded_file.name)
+            dest = settings.knowledge_base_path / safe_name
+            # Vérification que le chemin final reste dans le dossier autorisé
+            if not os.path.realpath(dest).startswith(
+                os.path.realpath(settings.knowledge_base_path)
+            ):
+                errors.append(f"{uploaded_file.name} : chemin invalide")
+                continue
+
+            dest.write_bytes(file_bytes)
+            saved.append(safe_name)
+
+        if errors:
+            st.error(f"Fichiers rejetés : {', '.join(errors)}")
+        if saved:
+            st.success(f"Added: {', '.join(saved)}")
+            st.cache_resource.clear()
+            st.rerun()
 
     st.divider()
 
@@ -313,7 +339,8 @@ for msg in st.session_state.messages:
                 '<div class="fallback-banner">⚠️ Not in your documents — answer from general knowledge</div>',
                 unsafe_allow_html=True,
             )
-        st.markdown(msg["content"])
+        # Échappement du contenu LLM pour éviter les injections XSS
+        st.write(html.escape(msg["content"]))
         if msg["role"] == "assistant" and not msg.get("is_fallback"):
             render_sources(msg.get("citations", []))
 
