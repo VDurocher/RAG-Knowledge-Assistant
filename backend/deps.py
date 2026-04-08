@@ -1,4 +1,4 @@
-"""Singleton du pipeline RAG — chargé une seule fois au démarrage FastAPI."""
+"""RAG pipeline singleton — loaded once at FastAPI startup."""
 
 import sys
 from dataclasses import dataclass
@@ -18,7 +18,7 @@ from core.rag import build_llm, build_retriever
 
 @dataclass
 class PipelineState:
-    """État du pipeline RAG partagé entre toutes les requêtes."""
+    """RAG pipeline state shared across all requests."""
 
     retriever: BaseRetriever
     vector_store: FAISS
@@ -28,12 +28,12 @@ class PipelineState:
     embedder_label: str
 
 
-# Instance globale initialisée au démarrage
+# Global instance initialised at startup
 _state: PipelineState | None = None
 
 
 def load_pipeline(force_rebuild: bool = False) -> PipelineState:
-    """Charge ou recharge le pipeline RAG complet."""
+    """Loads or reloads the full RAG pipeline."""
     documents = load_documents(settings.knowledge_base_path)
     vector_store = load_or_build_index(documents, settings, force_rebuild=force_rebuild)
     retriever = build_retriever(
@@ -64,18 +64,18 @@ def load_pipeline(force_rebuild: bool = False) -> PipelineState:
 
 
 def get_state() -> PipelineState:
-    """Retourne l'état courant du pipeline (erreur si non initialisé)."""
+    """Returns the current pipeline state (raises if not initialised)."""
     if _state is None:
-        raise RuntimeError("Pipeline non initialisé. Appelez init_pipeline() d'abord.")
+        raise RuntimeError("Pipeline not initialised. Call init_pipeline() first.")
     return _state
 
 
 def init_pipeline(force_rebuild: bool = False) -> None:
-    """Initialise ou réinitialise le pipeline global."""
+    """Initialises or reinitialises the global pipeline."""
     global _state
     _state = load_pipeline(force_rebuild=force_rebuild)
 
 
 def reload_pipeline(force_rebuild: bool = False) -> None:
-    """Recharge le pipeline (après ajout/suppression de documents)."""
+    """Reloads the pipeline (after adding or removing documents)."""
     init_pipeline(force_rebuild=force_rebuild)
