@@ -1,4 +1,4 @@
-"""Point d'entrée Streamlit — interface chat entreprise avec citations."""
+"""Streamlit entry point — enterprise chat interface with citations."""
 
 import html
 import os
@@ -14,7 +14,7 @@ from core.indexer import load_or_build_index
 from core.loader import list_source_files, load_documents
 from core.rag import ask_stream, build_llm, build_retriever
 
-# ─── Configuration Streamlit ─────────────────────────────────────────────────
+# ─── Streamlit configuration ─────────────────────────────────────────────────
 
 st.set_page_config(
     page_title="RAG Knowledge Assistant",
@@ -27,10 +27,10 @@ st.set_page_config(
 
 st.markdown("""
 <style>
-/* Import police */
+/* Font import */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
 
-/* Logo entreprise */
+/* Company logo */
 .logo-wrap {
     background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 100%);
     border-radius: 10px;
@@ -42,12 +42,12 @@ st.markdown("""
 .logo-name  { color: #60a5fa; font-size: 20px; font-weight: 700; letter-spacing: 3px; margin: 0; }
 .logo-sub   { color: #64748b; font-size: 10px; letter-spacing: 2px; margin-top: 3px; }
 
-/* Badges statut */
+/* Status badges */
 .badge      { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 12px; font-weight: 600; }
 .badge-ok   { background: #052e16; color: #4ade80; border: 1px solid #166534; }
 .badge-err  { background: #450a0a; color: #f87171; border: 1px solid #991b1b; }
 
-/* Chips de source — compactes, inline */
+/* Source chips — compact, inline */
 .sources-row { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
 .source-chip {
     display: inline-flex;
@@ -66,10 +66,10 @@ st.markdown("""
 .conf-medium { color: #fbbf24; font-size: 10px; margin-left: 4px; }
 .conf-low { color: #f87171; font-size: 10px; margin-left: 4px; }
 
-/* Ligne séparatrice légère sous les chips */
+/* Light separator line below chips */
 .sources-label { font-size: 11px; color: #4a6a8a; margin-bottom: 4px; letter-spacing: 0.5px; }
 
-/* Bannière fallback */
+/* Fallback banner */
 .fallback-banner {
     background: #1c1505;
     border: 1px solid #854d0e;
@@ -83,7 +83,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 
-# ─── Cache pipeline ───────────────────────────────────────────────────────────
+# ─── Pipeline cache ───────────────────────────────────────────────────────────
 
 @st.cache_resource(show_spinner="Loading knowledge base…")
 def initialize_rag_pipeline(
@@ -165,7 +165,7 @@ with st.sidebar:
     st.divider()
     st.subheader("📚 Knowledge Base")
 
-    # Liste des fichiers avec bouton de suppression
+    # File list with delete button
     for filename in source_files:
         icon = "📄" if filename.endswith(".pdf") else "📊" if filename.endswith(".csv") else "📝"
         col1, col2 = st.columns([5, 1])
@@ -190,7 +190,7 @@ with st.sidebar:
         label_visibility="collapsed",
     )
 
-    # Limite de taille maximale autorisée par fichier : 10 Mo
+    # Maximum allowed file size: 10 MB
     _MAX_UPLOAD_SIZE_BYTES = 10 * 1024 * 1024
 
     if uploaded_files:
@@ -199,26 +199,26 @@ with st.sidebar:
         for uploaded_file in uploaded_files:
             file_bytes = uploaded_file.read()
 
-            # Vérification de la taille avant écriture
+            # Size check before writing
             if len(file_bytes) > _MAX_UPLOAD_SIZE_BYTES:
-                errors.append(f"{uploaded_file.name} dépasse 10 Mo")
+                errors.append(f"{uploaded_file.name} exceeds 10 MB")
                 continue
 
-            # Nettoyage du nom de fichier pour éviter les path traversal
+            # Sanitise filename to prevent path traversal
             safe_name = os.path.basename(uploaded_file.name)
             dest = settings.knowledge_base_path / safe_name
-            # Vérification que le chemin final reste dans le dossier autorisé
+            # Verify the final path stays within the allowed folder
             if not os.path.realpath(dest).startswith(
                 os.path.realpath(settings.knowledge_base_path)
             ):
-                errors.append(f"{uploaded_file.name} : chemin invalide")
+                errors.append(f"{uploaded_file.name}: invalid path")
                 continue
 
             dest.write_bytes(file_bytes)
             saved.append(safe_name)
 
         if errors:
-            st.error(f"Fichiers rejetés : {', '.join(errors)}")
+            st.error(f"Rejected files: {', '.join(errors)}")
         if saved:
             st.success(f"Added: {', '.join(saved)}")
             st.cache_resource.clear()
@@ -234,7 +234,7 @@ with st.sidebar:
         st.session_state.messages = []
         st.rerun()
 
-    # Export de la conversation en Markdown
+    # Export conversation as Markdown
     if st.session_state.get("messages"):
         lines: list[str] = ["# Knowledge Assistant — Conversation Export\n"]
         for msg in st.session_state.messages:
@@ -258,7 +258,7 @@ with st.sidebar:
 st.title("🧠 Knowledge Assistant")
 st.caption("Ask questions about your company documents. Answers are grounded in your knowledge base.")
 
-# Validation config
+# Config validation
 try:
     settings.validate()
 except ValueError as error:
@@ -276,14 +276,14 @@ except Exception as error:
     st.error(f"**Pipeline error:** {error}")
     st.stop()
 
-# ─── Historique ───────────────────────────────────────────────────────────────
+# ─── History ──────────────────────────────────────────────────────────────────
 
 if "messages" not in st.session_state:
     st.session_state.messages = []
 
 
 def render_sources(citations: list[dict]) -> None:
-    """Affiche les sources sous forme de chips avec badge de confiance + excerpts."""
+    """Renders sources as chips with confidence badge and excerpts."""
     if not citations:
         return
 
@@ -291,7 +291,7 @@ def render_sources(citations: list[dict]) -> None:
     for c in citations:
         page_part = f'<span class="page">· p.{c["page"]}</span>' if c.get("page") else ""
 
-        # Badge de confiance si disponible
+        # Confidence badge if available
         conf = c.get("confidence")
         conf_html = ""
         if conf is not None:
@@ -313,7 +313,7 @@ def render_sources(citations: list[dict]) -> None:
             st.caption(c["excerpt"])
 
 
-# Message d'accueil — affiché uniquement si l'historique est vide
+# Welcome message — shown only when history is empty
 if not st.session_state.messages:
     st.markdown("""
     <div style="
@@ -331,7 +331,7 @@ if not st.session_state.messages:
     </div>
     """, unsafe_allow_html=True)
 
-# Rendu de l'historique
+# Render history
 for msg in st.session_state.messages:
     with st.chat_message(msg["role"]):
         if msg.get("is_fallback"):
@@ -339,7 +339,7 @@ for msg in st.session_state.messages:
                 '<div class="fallback-banner">⚠️ Not in your documents — answer from general knowledge</div>',
                 unsafe_allow_html=True,
             )
-        # Échappement du contenu LLM pour éviter les injections XSS
+        # Escape LLM content to prevent XSS injections
         st.write(html.escape(msg["content"]))
         if msg["role"] == "assistant" and not msg.get("is_fallback"):
             render_sources(msg.get("citations", []))
@@ -351,9 +351,9 @@ if prompt := st.chat_input("Ask a question about your documents…"):
         st.markdown(prompt)
     st.session_state.messages.append({"role": "user", "content": prompt})
 
-    # Construction de l'historique multi-tour (3 derniers échanges)
+    # Build multi-turn history (last 3 exchanges)
     chat_history: list[tuple[str, str]] = []
-    msgs = st.session_state.messages[:-1]  # Exclure la question courante
+    msgs = st.session_state.messages[:-1]  # Exclude current question
     for i in range(0, len(msgs) - 1, 2):
         if msgs[i]["role"] == "user" and msgs[i + 1]["role"] == "assistant":
             chat_history.append((msgs[i]["content"], msgs[i + 1]["content"]))
@@ -388,7 +388,7 @@ if prompt := st.chat_input("Ask a question about your documents…"):
             full_response = f"An error occurred: {error}"
             st.error(full_response)
 
-        # Citations — uniquement si l'IA a trouvé des docs (pas en fallback)
+        # Citations — only if the AI found documents (not in fallback)
         citations: list[dict] = []
         if source_docs:
             seen: set[str] = set()
