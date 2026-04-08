@@ -1,4 +1,4 @@
-"""Routes /api/documents — liste, upload, suppression + rebuild index."""
+"""Routes /api/documents — list, upload, delete + rebuild index."""
 
 import os
 import sys
@@ -17,22 +17,22 @@ from core.loader import list_source_files
 
 router = APIRouter()
 
-# Extensions acceptées à l'upload
+# Accepted upload extensions
 _ALLOWED_EXTENSIONS = {".pdf", ".txt", ".md", ".csv", ".docx", ".json"}
 
-# Taille maximale autorisée par fichier uploadé : 10 Mo
+# Maximum allowed file size per upload: 10 MB
 _MAX_UPLOAD_SIZE_BYTES = 10 * 1024 * 1024
 
 
 class DocumentInfo(BaseModel):
-    """Métadonnées d'un fichier de la knowledge base."""
+    """Metadata for a file in the knowledge base."""
 
     name: str
     extension: str
 
 
 class StatusResponse(BaseModel):
-    """État du pipeline retourné par /api/status."""
+    """Pipeline state returned by /api/status."""
 
     doc_count: int
     llm_label: str
@@ -41,46 +41,46 @@ class StatusResponse(BaseModel):
 
 @router.get("/documents", response_model=list[DocumentInfo], dependencies=[Depends(require_api_key)])
 def list_documents() -> list[DocumentInfo]:
-    """Retourne la liste des documents indexés."""
+    """Returns the list of indexed documents."""
     files = list_source_files(settings.knowledge_base_path)
     return [DocumentInfo(name=f, extension=Path(f).suffix.lower()) for f in files]
 
 
 @router.post("/documents/upload", response_model=list[DocumentInfo], dependencies=[Depends(require_api_key)])
 async def upload_documents(files: list[UploadFile]) -> list[DocumentInfo]:
-    """Upload un ou plusieurs fichiers dans knowledge_base et recharge le pipeline."""
+    """Uploads one or more files into knowledge_base and reloads the pipeline."""
     saved: list[DocumentInfo] = []
 
     for file in files:
         if not file.filename:
             continue
 
-        # Nettoyage du nom de fichier pour éliminer tout path traversal
+        # Sanitise filename to remove any path traversal
         safe_name = secure_filename(os.path.basename(file.filename))
         if not safe_name:
-            raise HTTPException(status_code=400, detail="Nom de fichier invalide.")
+            raise HTTPException(status_code=400, detail="Invalid filename.")
 
         ext = Path(safe_name).suffix.lower()
         if ext not in _ALLOWED_EXTENSIONS:
             raise HTTPException(
                 status_code=400,
-                detail=f"Format non supporté : {ext}. Formats acceptés : {', '.join(_ALLOWED_EXTENSIONS)}",
+                detail=f"Unsupported format: {ext}. Accepted formats: {', '.join(_ALLOWED_EXTENSIONS)}",
             )
 
-        # Lecture du contenu et vérification de la taille
+        # Read content and verify size
         content = await file.read()
         if len(content) > _MAX_UPLOAD_SIZE_BYTES:
             raise HTTPException(
                 status_code=413,
-                detail=f"Fichier trop volumineux : {safe_name}. Limite : 10 Mo.",
+                detail=f"File too large: {safe_name}. Limit: 10 MB.",
             )
 
         dest = settings.knowledge_base_path / safe_name
-        # Vérification que le chemin final reste dans le dossier autorisé
+        # Verify the final path stays within the allowed folder
         if not os.path.realpath(dest).startswith(
             os.path.realpath(settings.knowledge_base_path)
         ):
-            raise HTTPException(status_code=400, detail="Chemin de destination invalide.")
+            raise HTTPException(status_code=400, detail="Invalid destination path.")
 
         dest.write_bytes(content)
         saved.append(DocumentInfo(name=safe_name, extension=ext))
@@ -93,21 +93,21 @@ async def upload_documents(files: list[UploadFile]) -> list[DocumentInfo]:
 
 @router.delete("/documents/{filename}", dependencies=[Depends(require_api_key)])
 def delete_document(filename: str) -> dict[str, str]:
-    """Supprime un fichier de knowledge_base et recharge le pipeline."""
-    # Nettoyage du nom de fichier pour éliminer tout path traversal
+    """Deletes a file from knowledge_base and reloads the pipeline."""
+    # Sanitise filename to remove any path traversal
     safe_name = secure_filename(os.path.basename(filename))
     if not safe_name:
-        raise HTTPException(status_code=400, detail="Nom de fichier invalide.")
+        raise HTTPException(status_code=400, detail="Invalid filename.")
 
     target = settings.knowledge_base_path / safe_name
-    # Vérification que le chemin final reste dans le dossier autorisé
+    # Verify the final path stays within the allowed folder
     if not os.path.realpath(target).startswith(
         os.path.realpath(settings.knowledge_base_path)
     ):
-        raise HTTPException(status_code=400, detail="Chemin de destination invalide.")
+        raise HTTPException(status_code=400, detail="Invalid destination path.")
 
     if not target.exists():
-        raise HTTPException(status_code=404, detail=f"Fichier introuvable : {safe_name}")
+        raise HTTPException(status_code=404, detail=f"File not found: {safe_name}")
 
     target.unlink()
     reload_pipeline()
@@ -117,7 +117,7 @@ def delete_document(filename: str) -> dict[str, str]:
 
 @router.post("/rebuild", dependencies=[Depends(require_api_key)])
 def rebuild_index() -> dict[str, str]:
-    """Force un rebuild complet de l'index FAISS."""
+    """Forces a full rebuild of the FAISS index."""
     reload_pipeline(force_rebuild=True)
     state = get_state()
     return {"status": "ok", "doc_count": str(state.doc_count)}
@@ -125,7 +125,7 @@ def rebuild_index() -> dict[str, str]:
 
 @router.get("/status", response_model=StatusResponse, dependencies=[Depends(require_api_key)])
 def get_status() -> StatusResponse:
-    """Retourne l'état courant du pipeline."""
+    """Returns the current pipeline state."""
     state = get_state()
     return StatusResponse(
         doc_count=state.doc_count,
