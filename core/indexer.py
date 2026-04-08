@@ -1,4 +1,4 @@
-"""Construction et gestion de l'index FAISS (embeddings + persistance + incrémental)."""
+"""FAISS index construction and management (embeddings + persistence + incremental)."""
 
 import hashlib
 import json
@@ -12,7 +12,7 @@ from core.config import Settings
 
 
 def _get_embeddings(settings: Settings):
-    """Instancie le modèle d'embeddings selon la configuration."""
+    """Instantiates the embeddings model according to configuration."""
     if settings.embedder_type == "openai":
         from langchain_openai import OpenAIEmbeddings
 
@@ -21,7 +21,7 @@ def _get_embeddings(settings: Settings):
             api_key=settings.openai_api_key,
         )
 
-    # Mode local : sentence-transformers via HuggingFace (gratuit, offline)
+    # Local mode: sentence-transformers via HuggingFace (free, offline)
     from langchain_community.embeddings import HuggingFaceEmbeddings
 
     return HuggingFaceEmbeddings(
@@ -32,7 +32,7 @@ def _get_embeddings(settings: Settings):
 
 
 def _compute_manifest(documents: list[Document]) -> str:
-    """Calcule un hash global représentant l'état actuel des documents (sources + contenu)."""
+    """Computes a global hash representing the current state of documents (sources + content)."""
     sorted_docs = sorted(documents, key=lambda d: d.metadata.get("source", ""))
     fingerprint = "".join(
         f"{d.metadata.get('source', '')}:{d.page_content}"
@@ -42,7 +42,7 @@ def _compute_manifest(documents: list[Document]) -> str:
 
 
 def _compute_file_hashes(documents: list[Document]) -> dict[str, str]:
-    """Calcule un hash SHA-256 par fichier source pour la détection incrémentale."""
+    """Computes a SHA-256 hash per source file for incremental detection."""
     file_docs: dict[str, list[str]] = {}
     for doc in documents:
         source = doc.metadata.get("source", "")
@@ -54,13 +54,13 @@ def _compute_file_hashes(documents: list[Document]) -> dict[str, str]:
 
 
 def _load_manifest(vector_store_path: Path) -> dict:
-    """Charge le manifest complet (hash global + hashes par fichier)."""
+    """Loads the full manifest (global hash + per-file hashes)."""
     manifest_file = vector_store_path / "manifest.json"
     if not manifest_file.exists():
         return {"hash": "", "files": {}}
     try:
         data = json.loads(manifest_file.read_text(encoding="utf-8"))
-        # Compatibilité avec l'ancien format (hash seulement)
+        # Compatibility with old format (hash only)
         if "files" not in data:
             data["files"] = {}
         return data
@@ -73,7 +73,7 @@ def _save_manifest(
     global_hash: str,
     file_hashes: dict[str, str],
 ) -> None:
-    """Sauvegarde le manifest après un build ou une mise à jour incrémentale."""
+    """Saves the manifest after a build or incremental update."""
     manifest_file = vector_store_path / "manifest.json"
     manifest_file.write_text(
         json.dumps({"hash": global_hash, "files": file_hashes}),
@@ -84,11 +84,11 @@ def _save_manifest(
 def split_documents(
     documents: list[Document], chunk_size: int, chunk_overlap: int
 ) -> list[Document]:
-    """Découpe les documents en chunks de taille contrôlée."""
+    """Splits documents into chunks of controlled size."""
     splitter = RecursiveCharacterTextSplitter(
         chunk_size=chunk_size,
         chunk_overlap=chunk_overlap,
-        # Séparateurs hiérarchiques : paragraphe → phrase → mot
+        # Hierarchical separators: paragraph → sentence → word
         separators=["\n\n", "\n", ". ", " ", ""],
     )
     return splitter.split_documents(documents)
@@ -96,12 +96,12 @@ def split_documents(
 
 def build_index(documents: list[Document], settings: Settings) -> FAISS:
     """
-    Crée un nouvel index FAISS complet à partir des documents fournis.
+    Creates a new full FAISS index from the provided documents.
 
-    Sauvegarde l'index et le manifest sur disque.
+    Saves the index and manifest to disk.
     """
     if not documents:
-        raise ValueError("Aucun document chargé. Ajoutez des fichiers dans knowledge_base/.")
+        raise ValueError("No documents loaded. Add files to knowledge_base/.")
 
     chunks = split_documents(documents, settings.chunk_size, settings.chunk_overlap)
     embeddings = _get_embeddings(settings)
@@ -123,15 +123,15 @@ def load_or_build_index(
     documents: list[Document], settings: Settings, force_rebuild: bool = False
 ) -> FAISS:
     """
-    Charge l'index depuis le disque si disponible et à jour, reconstruit sinon.
+    Loads the index from disk if available and up to date, rebuilds otherwise.
 
-    Stratégie incrémentale :
-    - Seulement des ajouts → ajout ciblé dans l'index existant (rapide)
-    - Modification ou suppression → rebuild complet (seule option sûre avec FAISS)
-    - force_rebuild=True → rebuild systématique
+    Incremental strategy:
+    - Additions only → targeted insert into existing index (fast)
+    - Modification or deletion → full rebuild (only safe option with FAISS)
+    - force_rebuild=True → always rebuild
 
     Returns:
-        Index FAISS prêt à l'emploi.
+        FAISS index ready to use.
     """
     embeddings = _get_embeddings(settings)
     index_file = settings.vector_store_path / "index.faiss"
@@ -142,19 +142,19 @@ def load_or_build_index(
     manifest = _load_manifest(settings.vector_store_path)
     current_hash = _compute_manifest(documents)
 
-    # Index déjà à jour
+    # Index already up to date
     if manifest["hash"] == current_hash:
-        # AVERTISSEMENT SÉCURITÉ : allow_dangerous_deserialization active la désérialisation
-        # pickle de FAISS, ce qui peut exécuter du code arbitraire si l'index est compromis.
-        # Risque accepté ici car l'index est généré et stocké localement par l'application
-        # elle-même — il ne provient jamais d'une source externe non fiable.
+        # SECURITY WARNING: allow_dangerous_deserialization enables FAISS pickle
+        # deserialisation, which can execute arbitrary code if the index is compromised.
+        # Risk accepted here because the index is generated and stored locally by the
+        # application itself — it never comes from an untrusted external source.
         return FAISS.load_local(
             str(settings.vector_store_path),
             embeddings,
             allow_dangerous_deserialization=True,
         )
 
-    # Analyser quels fichiers ont changé
+    # Analyse which files changed
     current_file_hashes = _compute_file_hashes(documents)
     saved_file_hashes: dict[str, str] = manifest.get("files", {})
 
@@ -165,9 +165,9 @@ def load_or_build_index(
         if k in saved_file_hashes and saved_file_hashes[k] != v
     }
 
-    # Cas favorable : seulement des ajouts → indexation incrémentale
+    # Favourable case: additions only → incremental indexing
     if new_files and not removed_files and not modified_files:
-        # AVERTISSEMENT SÉCURITÉ : voir commentaire ci-dessus — même justification.
+        # SECURITY WARNING: see comment above — same justification.
         vector_store = FAISS.load_local(
             str(settings.vector_store_path),
             embeddings,
@@ -180,5 +180,5 @@ def load_or_build_index(
         _save_manifest(settings.vector_store_path, current_hash, current_file_hashes)
         return vector_store
 
-    # Cas général : modification ou suppression → rebuild complet
+    # General case: modification or deletion → full rebuild
     return build_index(documents, settings)
