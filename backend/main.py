@@ -1,4 +1,4 @@
-"""FastAPI — point d'entrée principal avec lifespan et CORS."""
+"""FastAPI — main entry point with lifespan and CORS."""
 
 import sys
 from contextlib import asynccontextmanager
@@ -17,7 +17,7 @@ from core.config import settings
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    """Charge le pipeline RAG au démarrage, libère les ressources à l'arrêt."""
+    """Loads the RAG pipeline on startup, releases resources on shutdown."""
     settings.validate()
     init_pipeline()
     yield
@@ -29,7 +29,7 @@ app = FastAPI(
     lifespan=lifespan,
 )
 
-# CORS — autorise le frontend Next.js en dev et prod
+# CORS — allows the Next.js frontend in dev and prod
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["http://localhost:3000", "http://127.0.0.1:3000"],
@@ -44,5 +44,5 @@ app.include_router(documents_router, prefix="/api")
 
 @app.get("/api/health")
 def health() -> dict[str, str]:
-    """Healthcheck — vérifie que l'API répond."""
+    """Healthcheck — verifies the API is responding."""
     return {"status": "ok"}
