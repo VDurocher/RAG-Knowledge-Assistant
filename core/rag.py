@@ -1,4 +1,4 @@
-"""Chaîne RAG : récupération + génération + citations + scores de confiance."""
+"""RAG chain: retrieval + generation + citations + confidence scores."""
 
 from dataclasses import dataclass
 from typing import Any, Generator
@@ -12,7 +12,7 @@ from langchain_core.retrievers import BaseRetriever
 
 from core.config import Settings
 
-# Prompt RAG — synthèse intelligente, refuse uniquement si vraiment rien de pertinent
+# RAG prompt — intelligent synthesis, refuses only if truly nothing relevant
 _SYSTEM_PROMPT = """You are a professional knowledge assistant for a business.
 Answer the user's question using the provided document context.
 
@@ -28,7 +28,7 @@ Guidelines:
 Context:
 {context}"""
 
-# Prompt fallback — utilisé quand aucun document pertinent n'est trouvé
+# Fallback prompt — used when no relevant document is found
 _FALLBACK_PROMPT = """You are a helpful and professional business assistant.
 The user's question could not be answered from the company's internal documents.
 
@@ -39,7 +39,7 @@ could help answer this question more precisely in the future."""
 
 @dataclass(frozen=True)
 class RAGResponse:
-    """Réponse complète du système RAG avec citations."""
+    """Complete RAG system response with citations."""
 
     answer: str
     source_documents: list[Document]
@@ -47,7 +47,7 @@ class RAGResponse:
 
     @property
     def unique_sources(self) -> list[str]:
-        """Liste dédupliquée des fichiers sources cités."""
+        """Deduplicated list of cited source files."""
         seen: set[str] = set()
         sources: list[str] = []
         for doc in self.source_documents:
@@ -59,7 +59,7 @@ class RAGResponse:
 
 
 def _format_context(documents: list[Document]) -> str:
-    """Formate les documents récupérés en contexte structuré pour le prompt."""
+    """Formats retrieved documents into a structured context for the prompt."""
     sections: list[str] = []
     for i, doc in enumerate(documents, start=1):
         source = doc.metadata.get("source", "Unknown")
@@ -72,7 +72,7 @@ def _format_context(documents: list[Document]) -> str:
 
 
 def _confidence_label(score: float) -> str:
-    """Convertit un score de confiance (0–1) en label lisible."""
+    """Converts a confidence score (0–1) into a human-readable label."""
     if score >= 0.7:
         return "high"
     if score >= 0.4:
@@ -87,10 +87,10 @@ def _retrieve_with_scores(
     score_threshold: float,
 ) -> list[Document]:
     """
-    Récupère les documents via similarity_search_with_score et filtre par seuil.
+    Retrieves documents via similarity_search_with_score and filters by threshold.
 
-    Ajoute _confidence (0–1) et _confidence_label dans metadata de chaque document.
-    Avec embeddings normalisés, la distance L2 FAISS se convertit en :
+    Adds _confidence (0–1) and _confidence_label to each document's metadata.
+    With normalised embeddings, FAISS L2 distance converts to:
         confidence = max(0, 1 - distance / 2)
     """
     results: list[tuple[Document, float]] = vector_store.similarity_search_with_score(
@@ -115,11 +115,11 @@ def build_retriever(
     settings: Settings | None = None,
 ) -> BaseRetriever:
     """
-    Construit un retriever FAISS ou hybride BM25 + FAISS.
+    Builds a FAISS or hybrid BM25 + FAISS retriever.
 
-    - hybrid=False (défaut) : recherche sémantique pure via FAISS
-    - hybrid=True : EnsembleRetriever (BM25 lexical + FAISS sémantique)
-      Requiert rank-bm25 installé et documents fournis.
+    - hybrid=False (default): pure semantic search via FAISS
+    - hybrid=True: EnsembleRetriever (BM25 lexical + FAISS semantic)
+      Requires rank-bm25 installed and documents provided.
     """
     faiss_retriever = vector_store.as_retriever(
         search_type="similarity",
@@ -145,16 +145,16 @@ def build_retriever(
             weights=[bm25_weight, 1.0 - bm25_weight],
         )
     except ImportError:
-        # rank-bm25 absent — fallback silencieux sur FAISS seul
+        # rank-bm25 not available — silent fallback to FAISS only
         return faiss_retriever
 
 
 def build_llm(settings: Settings) -> BaseChatModel:
     """
-    Instancie le modèle de génération selon LLM_TYPE.
+    Instantiates the generation model according to LLM_TYPE.
 
-    - "openai" → ChatOpenAI (cloud, API key requise)
-    - "ollama" → ChatOllama (local, entièrement gratuit, nécessite Ollama installé)
+    - "openai" → ChatOpenAI (cloud, API key required)
+    - "ollama" → ChatOllama (local, fully free, requires Ollama installed)
     """
     if settings.llm_type == "ollama":
         from langchain_community.chat_models import ChatOllama
@@ -171,7 +171,7 @@ def build_llm(settings: Settings) -> BaseChatModel:
     return ChatOpenAI(
         model=settings.openai_chat_model,
         api_key=settings.openai_api_key,
-        temperature=0.1,  # Faible créativité pour maximiser la précision factuelle
+        temperature=0.1,  # Low creativity to maximise factual accuracy
         timeout=60,
         max_retries=2,
     )
@@ -188,29 +188,29 @@ def ask_stream(
     k: int = 4,
 ) -> tuple[Any, list[Document], bool]:
     """
-    Répond en streaming avec citations. Retourne (stream, source_docs, is_fallback).
+    Answers with streaming and citations. Returns (stream, source_docs, is_fallback).
 
-    Paramètres:
-        question: Question de l'utilisateur.
-        retriever: Retriever configuré (FAISS ou hybride).
-        llm: Modèle de génération.
-        fallback_to_llm: Répondre depuis les connaissances générales si aucun doc trouvé.
-        score_threshold: Seuil de confiance minimum (0.0 = désactivé).
-            Nécessite vector_store pour le calcul des scores.
-        chat_history: Historique [(question, réponse), ...] pour le contexte multi-tour.
-        vector_store: Index FAISS brut pour la recherche scorée (optionnel).
-        k: Nombre de documents à récupérer (utilisé avec vector_store).
+    Parameters:
+        question: User's question.
+        retriever: Configured retriever (FAISS or hybrid).
+        llm: Generation model.
+        fallback_to_llm: Answer from general knowledge if no document found.
+        score_threshold: Minimum confidence threshold (0.0 = disabled).
+            Requires vector_store for score computation.
+        chat_history: History [(question, answer), ...] for multi-turn context.
+        vector_store: Raw FAISS index for scored retrieval (optional).
+        k: Number of documents to retrieve (used with vector_store).
 
     Returns:
         (stream_iterator, source_documents, is_fallback)
     """
-    # Récupération : scorée si vector_store disponible, sinon via retriever
+    # Retrieval: scored if vector_store available, otherwise via retriever
     if vector_store is not None and score_threshold > 0.0:
         source_documents = _retrieve_with_scores(question, vector_store, k, score_threshold)
     else:
         source_documents = retriever.invoke(question)
 
-    # Aucun document pertinent trouvé
+    # No relevant documents found
     if not source_documents:
         if fallback_to_llm:
             fallback_prompt = ChatPromptTemplate.from_messages([
@@ -225,12 +225,12 @@ def ask_stream(
 
         return _no_docs_stream(), [], False
 
-    # Construction du bloc historique conversationnel
+    # Build conversational history block
     history_block = ""
     if chat_history:
         lines = "\n".join(
             f"Human: {q}\nAssistant: {a}"
-            for q, a in chat_history[-3:]  # Fenêtre des 3 derniers échanges
+            for q, a in chat_history[-3:]  # Window of last 3 exchanges
         )
         history_block = f"\nPrevious conversation:\n{lines}\n"
 
