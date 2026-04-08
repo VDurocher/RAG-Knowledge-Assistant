@@ -1,4 +1,4 @@
-"""Route POST /api/chat — streaming SSE token par token."""
+"""Route POST /api/chat — token-by-token SSE streaming."""
 
 import asyncio
 import json
@@ -17,7 +17,7 @@ router = APIRouter()
 
 
 class ChatRequest(BaseModel):
-    """Corps de la requête chat."""
+    """Chat request body."""
 
     question: str
     chat_history: list[tuple[str, str]] = []
@@ -28,10 +28,10 @@ class ChatRequest(BaseModel):
 
 async def _generate_sse(request: ChatRequest) -> AsyncGenerator[str, None]:
     """
-    Génère les événements SSE depuis le pipeline RAG.
+    Generates SSE events from the RAG pipeline.
 
-    Protocole :
-        event: token   → {"token": "..."} — un token du stream LLM
+    Protocol:
+        event: token   → {"token": "..."} — one token from the LLM stream
         event: sources → [{source, page, confidence, excerpt}, ...]
         event: done    → {"is_fallback": bool}
         event: error   → {"message": "..."}
@@ -41,7 +41,7 @@ async def _generate_sse(request: ChatRequest) -> AsyncGenerator[str, None]:
     loop = asyncio.get_event_loop()
 
     def run_rag() -> None:
-        """Exécute le pipeline RAG dans un thread dédié."""
+        """Runs the RAG pipeline in a dedicated thread."""
         try:
             stream, source_docs, is_fallback = ask_stream(
                 question=request.question,
@@ -57,7 +57,7 @@ async def _generate_sse(request: ChatRequest) -> AsyncGenerator[str, None]:
             for token in stream:
                 loop.call_soon_threadsafe(queue.put_nowait, ("token", token))
 
-            # Construction des citations dédupliquées
+            # Build deduplicated citations
             citations: list[dict] = []
             seen: set[str] = set()
             for doc in source_docs:
@@ -103,7 +103,7 @@ async def _generate_sse(request: ChatRequest) -> AsyncGenerator[str, None]:
 
 @router.post("/chat", dependencies=[Depends(require_api_key)])
 async def chat(request: ChatRequest) -> StreamingResponse:
-    """Répond en streaming SSE à une question sur la knowledge base."""
+    """Responds with SSE streaming to a question about the knowledge base."""
     return StreamingResponse(
         _generate_sse(request),
         media_type="text/event-stream",
