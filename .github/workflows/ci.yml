@@ -25,8 +25,20 @@ jobs:
           key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
           restore-keys: ${{ runner.os }}-pip-
 
-      - name: Install dependencies
-        run: pip install -r requirements.txt
+      - name: Install test dependencies
+        # sentence-transformers (~500MB, requires torch) is only needed for
+        # EMBEDDER_TYPE=local at runtime — skip it in CI to keep builds fast.
+        run: |
+          pip install \
+            "langchain>=0.3.0" \
+            "langchain-community>=0.3.0" \
+            "langchain-openai>=0.2.0" \
+            "langchain-text-splitters>=0.3.0" \
+            "faiss-cpu>=1.9.0" \
+            "pypdf>=5.0.0" \
+            "python-dotenv>=1.0.0" \
+            "werkzeug>=3.0.0" \
+            pytest
 
       - name: Run tests
         run: pytest tests/ -v --tb=short
