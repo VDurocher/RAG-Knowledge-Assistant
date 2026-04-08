@@ -1,4 +1,4 @@
-"""Chargement des documents PDF, TXT, CSV, DOCX et JSON depuis knowledge_base."""
+"""Loading PDF, TXT, CSV, DOCX and JSON documents from knowledge_base."""
 
 import logging
 from pathlib import Path
@@ -6,21 +6,21 @@ from pathlib import Path
 from langchain_community.document_loaders import CSVLoader, PyPDFLoader, TextLoader
 from langchain_core.documents import Document
 
-# Logger structuré — remplace les print() interdits en production
+# Structured logger — replaces print() which is forbidden in production
 _logger = logging.getLogger(__name__)
 
-# Extensions texte — même logique de chargement (TextLoader ou loader dédié)
+# Text extensions — same loading logic (TextLoader or dedicated loader)
 _TEXT_EXTENSIONS: dict[str, type] = {
     ".pdf": PyPDFLoader,
     ".txt": TextLoader,
     ".md": TextLoader,
-    ".json": TextLoader,  # JSON chargé comme texte brut
+    ".json": TextLoader,  # JSON loaded as raw text
 }
 _SUPPORTED_EXTENSIONS = {**_TEXT_EXTENSIONS, ".csv": CSVLoader, ".docx": None}
 
 
 def _load_csv(file_path: Path) -> list[Document]:
-    """Charge un CSV : chaque ligne devient un Document avec toutes ses colonnes."""
+    """Loads a CSV: each row becomes a Document with all its columns."""
     loader = CSVLoader(
         str(file_path),
         encoding="utf-8",
@@ -33,12 +33,12 @@ def _load_csv(file_path: Path) -> list[Document]:
 
 
 def _load_docx(file_path: Path) -> list[Document]:
-    """Charge un DOCX via Docx2txtLoader (nécessite docx2txt)."""
+    """Loads a DOCX via Docx2txtLoader (requires docx2txt)."""
     try:
         from langchain_community.document_loaders import Docx2txtLoader
     except ImportError:
         raise ImportError(
-            "Le chargement DOCX nécessite docx2txt. Installez-le avec : pip install docx2txt"
+            "Loading DOCX requires docx2txt. Install it with: pip install docx2txt"
         )
     loader = Docx2txtLoader(str(file_path))
     docs = loader.load()
@@ -49,18 +49,18 @@ def _load_docx(file_path: Path) -> list[Document]:
 
 def load_documents(knowledge_base_path: Path) -> list[Document]:
     """
-    Charge tous les fichiers supportés du dossier spécifié.
+    Loads all supported files from the specified folder.
 
-    Formats acceptés : PDF, TXT, MD, CSV, DOCX, JSON.
-    Chaque document reçoit metadata['source'] = nom du fichier pour les citations.
+    Accepted formats: PDF, TXT, MD, CSV, DOCX, JSON.
+    Each document receives metadata['source'] = filename for citations.
 
     Raises:
-        FileNotFoundError: Si knowledge_base n'existe pas.
+        FileNotFoundError: If knowledge_base does not exist.
     """
     if not knowledge_base_path.exists():
         raise FileNotFoundError(
-            f"Dossier introuvable: '{knowledge_base_path}'. "
-            "Créez-le et ajoutez vos fichiers PDF/TXT/CSV/DOCX/JSON."
+            f"Folder not found: '{knowledge_base_path}'. "
+            "Create it and add your PDF/TXT/CSV/DOCX/JSON files."
         )
 
     documents: list[Document] = []
@@ -91,13 +91,13 @@ def load_documents(knowledge_base_path: Path) -> list[Document]:
             documents.extend(docs)
 
         except Exception as error:
-            _logger.warning("Impossible de charger '%s': %s", file_path.name, error)
+            _logger.warning("Could not load '%s': %s", file_path.name, error)
 
     return documents
 
 
 def list_source_files(knowledge_base_path: Path) -> list[str]:
-    """Retourne la liste des fichiers supportés dans knowledge_base."""
+    """Returns the list of supported files in knowledge_base."""
     if not knowledge_base_path.exists():
         return []
 
