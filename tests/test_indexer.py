@@ -1,4 +1,4 @@
-"""Tests unitaires pour l'indexation et la découpe de documents."""
+"""Unit tests for document indexing and splitting."""
 
 from pathlib import Path
 from unittest.mock import MagicMock, patch
@@ -18,7 +18,7 @@ class TestSplitDocuments:
 
         assert len(chunks) > 1
         for chunk in chunks:
-            assert len(chunk.page_content) <= 600  # Tolérance pour les séparateurs
+            assert len(chunk.page_content) <= 600  # Tolerance for separators
 
     def test_preserves_metadata(self) -> None:
         docs = [Document(page_content="Short text.", metadata={"source": "doc.pdf", "page": 1})]
@@ -34,17 +34,24 @@ class TestSplitDocuments:
 
 
 class TestComputeManifest:
-    def test_same_sources_same_hash(self) -> None:
+    def test_same_input_different_order_same_hash(self) -> None:
+        """Documents sorted by source — order in the input list must not matter."""
         docs_a = [
             Document(page_content="Content A", metadata={"source": "a.txt"}),
             Document(page_content="Content B", metadata={"source": "b.txt"}),
         ]
         docs_b = [
-            Document(page_content="Different content", metadata={"source": "a.txt"}),
-            Document(page_content="Other content", metadata={"source": "b.txt"}),
+            Document(page_content="Content B", metadata={"source": "b.txt"}),
+            Document(page_content="Content A", metadata={"source": "a.txt"}),
         ]
-        # Le hash est basé sur les noms de fichiers, pas le contenu
         assert _compute_manifest(docs_a) == _compute_manifest(docs_b)
+
+    def test_different_content_different_hash(self) -> None:
+        """Changing file content must produce a different manifest hash."""
+        docs_a = [Document(page_content="Content A", metadata={"source": "a.txt"})]
+        docs_b = [Document(page_content="Content B", metadata={"source": "a.txt"})]
+
+        assert _compute_manifest(docs_a) != _compute_manifest(docs_b)
 
     def test_different_sources_different_hash(self) -> None:
         docs_a = [Document(page_content="Content", metadata={"source": "a.txt"})]

@@ -16,7 +16,7 @@ _TEXT_EXTENSIONS: dict[str, type] = {
     ".md": TextLoader,
     ".json": TextLoader,  # JSON loaded as raw text
 }
-_SUPPORTED_EXTENSIONS = {**_TEXT_EXTENSIONS, ".csv": CSVLoader, ".docx": None}
+_SUPPORTED_EXTENSIONS = {**_TEXT_EXTENSIONS, ".csv": CSVLoader}
 
 
 def _load_csv(file_path: Path) -> list[Document]:
